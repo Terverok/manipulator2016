@@ -36,10 +36,8 @@ public class Source {
 	
 	
 	public static void main(String[] args) throws InterruptedException {
-		//Controller cont = new Controller();
-		
-		
-		JFrame window = new MyWindow(p);
+			
+		/*JFrame window = new MyWindow(p);
 		
 		window.setSize(800, 600);	
 		window.setLocationRelativeTo(null);
@@ -104,7 +102,7 @@ public class Source {
 		}
 		window.repaint();
 		Thread.sleep(1500);
-		}
+		}*/
 		//double[] data = Kinematics.calculateArmPosition(5, 3, 8);
 		//System.out.print(data[0] +" "+ data[1] + " "+ data[2]);
 		//int[] pos = cont.getMotorPositions();
@@ -136,12 +134,22 @@ public class Source {
 			System.out.println(vec[0] + " " + vec[1] + " " + vec[2]);
 			System.out.println("Length: " + Math.sqrt(vec[0]*vec[0] + vec[1]*vec[1] + vec[2]*vec[2]));
 		}*/
+		Controller cont = new Controller();
 		
-		//cont.moveArmTo(23.f, 5.f, 36.f);
+		double[] vec = cont.getArmPosition();
+		System.out.println("Pozycja startowa:");
+		System.out.println(vec[0] + " " + vec[1] + " " + vec[2]);
 		
-		//cont.reset();
+		cont.moveArmTo(20.0f, 5.f, 36.f);
 		
+		System.out.println("Pozycja przesunieta:");
+		vec = cont.getArmPosition();
+		System.out.println(vec[0] + " " + vec[1] + " " + vec[2]);
 		
+		cont.reset();
+		
+		System.out.println("Szybki test kinematyki odwrotnej:");
+		cont.moveArmTo(40.f, 0.f, 36.f)
 		
 	}
 	
