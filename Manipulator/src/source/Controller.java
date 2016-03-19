@@ -8,7 +8,8 @@ import lejos.nxt.Motor;
 
 public class Controller {
 	static int[] startingPosition;
-	float przelozenieA, przelozenieB, przelozenieC;
+	static float przelozenieA;
+	static float przelozenieB;
 	
 	public Controller() {
 		// TODO Auto-generated constructor stub
@@ -17,7 +18,6 @@ public class Controller {
 		int startSpeed = 200;
 		przelozenieA = 560/16.f;
 		przelozenieB = 5.f;
-		przelozenieC = 1.f;
 		Motor.A.setSpeed(Math.round(startSpeed*2.2f)); //for A to rotate faster
 		Motor.B.setSpeed(Math.round(startSpeed*0.5f));//0.04
 		Motor.C.setSpeed(Math.round(startSpeed*0.25f));//0.05
@@ -29,8 +29,8 @@ public class Controller {
 	
 	public int[] CorrectDegrees(float[] angles) {//Added by Marek
 		int[] correct = {
-				Math.round(angles[0] * 560/16.f),
-				Math.round(angles[1] * 5.f),
+				Math.round(angles[0] * przelozenieA),
+				Math.round(angles[1] * przelozenieB),
 				Math.round(angles[2])
 		};
 		return correct;
@@ -38,8 +38,8 @@ public class Controller {
 	
 	public int[] CorrectDegrees(float alpha, float beta, float delta) {//Added by Marek
 		int[] correct = {
-				Math.round(alpha * 560/16.f),
-				Math.round(beta * 5.f),
+				Math.round(alpha * przelozenieA),
+				Math.round(beta * przelozenieB),
 				Math.round(delta)
 		};
 		return correct;
@@ -47,8 +47,8 @@ public class Controller {
 	
 	public static float[] ReverseCorrectDegrees(int[] angles) {//Added by Marek
 		float[] rev = {
-				angles[0] * 16/560.f,
-				angles[1] * 1/5.f,
+				angles[0] / przelozenieA,
+				angles[1] / przelozenieB,
 				angles[2]
 		};
 		return rev;
@@ -78,12 +78,15 @@ public class Controller {
 	
 	public int[] rotateMotorsToDeg(float alpha, float beta, float delta){ //Added by Marek, corrected for degrees
 		//zabezpieczenia prze groźnymi kątami
-		float alphaMin = -175.f;
-		if (alpha < alphaMin) alpha = -175.f;
-		else if (alpha > 80.f) alpha = 80.f;
+		float alphaMin = -175.f,
+		alphaMax = 80.f,
+		betaMin = -58.f,
+		betaMax = 60.f;
+		if (alpha < alphaMin) alpha = alphaMin;
+		else if (alpha > alphaMax) alpha = alphaMax;
 		
-		if (beta < -58.f) beta = -58.f;
-		else if (beta > 60.f) beta = 60.f;
+		if (beta < betaMin) beta = betaMin;
+		else if (beta > betaMax) beta = betaMax;
 		
 		if (delta < -50.f) delta = -50.f;
 		else if (delta > 245.f) delta = 245.f;
