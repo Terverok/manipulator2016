@@ -15,29 +15,74 @@ import source.*;
 class MyWindow extends JFrame {
 	private static final long serialVersionUID = 1L;
 	int[] points;
+	Controller cont;
 	
-	public MyWindow(int[] p) {
+	public MyWindow(int[] p, Controller c) {
 		super("Manipulator");
 		points = p;
+		cont = c;
 	}
 	
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
-		g.clearRect(0, 0, 800, 600);
+		/*g.clearRect(0, 0, 800, 600);
+		
+		double[] zeros = {0.d, 0.d, 0.d, 1.d};
+		float[] pos = cont.ReverseCorrectDegrees(cont.getMotorPositions());
+		
+		RealVector[] v = new RealVector[5];
+		
+		for(int i = 0; i < v.length; i++) v[i] = MatrixUtils.createRealVector(zeros);
+		
+		RealMatrix t = Kinematics.RotateZ((float) Math.toRadians(pos[0]));
+		t = t.multiply(Kinematics.Translate(0.f, 0.f, 0.36f));
+		
+		v[1] = t.operate(v[0]);
+		
+		t = t.multiply(Kinematics.RotateY((float) Math.toRadians(pos[1])));
+		t = t.multiply(Kinematics.Translate(0.245f, 0.f, 0.f));
+		
+		v[2] = t.operate(v[0]);
+		
+		t = t.multiply(Kinematics.RotateY((float) Math.toRadians(pos[2]-90.f)));
+		t = t.multiply(Kinematics.Translate(0.195f, 0.f, 0.f));	
+		
+		v[3] = t.operate(v[0]);
+		
+		v[4] = MatrixUtils.createRealVector(Kinematics.calculateArmPosition(pos[0], pos[1], pos[2]));
+		v[4] = v[4].mapMultiply(0.01f);
+		
+		for(int i = 0; i < v.length; i++) {
+			/*if (v[i].getEntry(3) < near) v[i] = v[i].mapDivide(near +0.1f);
+			else v[i] = v[i].mapDivide(v[i].getEntry(3));/=*/
+			
+			/*points[2*i] = (int)Math.round(-v[i].getEntry(0) * this.getWidth()/2)+(this.getWidth()/2);
+			points[2*i+1] = (int)Math.round(-v[i].getEntry(2) * this.getHeight()/2)+(this.getHeight()/2);
+			//System.out.println("x:" + v[i].getEntry(0) + " y:" + v[i].getEntry(1) + " z:" + v[i].getEntry(2));
+		}
+		
 		Source.draw(g, points);
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
 	}
 	
 };
 
 public class Source {	
 
-	static int[] p = new int[2*4];
+	static int[] p = new int[2*5];
 	
 	
 	public static void main(String[] args) throws InterruptedException {
 			
-		/*JFrame window = new MyWindow(p);
+		Controller cont = new Controller();
+		
+		JFrame window = new MyWindow(p, cont);
 		
 		window.setSize(800, 600);	
 		window.setLocationRelativeTo(null);
@@ -45,17 +90,8 @@ public class Source {
 		
 		window.setVisible(true);
 		
-		double[] zeros = {0.d, 0.d, 0.d, 1.d};
-		
-		RealVector[] v = new RealVector[4];
-		
-		for(int i = 0; i < v.length; i++) v[i] = MatrixUtils.createRealVector(zeros);
-				
-		float alpha = 0.f*Kinematics.TachometrPerRadian;
-		float beta = 0.f*Kinematics.TachometrPerRadian;
-		float gamma = 0.f*Kinematics.TachometrPerRadian;
-		
-		float near = 0.1f;
+		window.repaint();
+		/*float near = 0.1f;
 		float right = window.getWidth()/2;
 		float left = -right;
 		float top = window.getHeight()/2;
@@ -67,80 +103,45 @@ public class Source {
 				{0.d, 0.d, (-far - near) / (far - near), -2 * far * near / (far - near)},
 				{0.d, 0.d, -1.d, 0.d}
 		};
-		RealMatrix MatrixPers = MatrixUtils.createRealMatrix(PerspectiveMatdata);
+		RealMatrix MatrixPers = MatrixUtils.createRealMatrix(PerspectiveMatdata);*/
+		try{
 		
-		while(true) {
-		alpha += 15.f*Kinematics.TachometrPerRadian;
-		beta += 15f*Kinematics.TachometrPerRadian;
-		//gamma += 5f*Kinematics.TachometrPerRadian;
-		
-		RealMatrix t = Kinematics.RotateX(0.35f).multiply(Kinematics.RotateY(0.24f));
-		t = t.multiply(Kinematics.RotateZ(alpha));
-		t = t.multiply(Kinematics.Translate(0.f, 0.f, 3*0.36f));
-		
-		v[1] = t.multiply(MatrixPers).operate(v[0]);
-		
-		t = t.multiply(Kinematics.RotateY(beta));
-		t = t.multiply(Kinematics.Translate(3*0.245f, 0.f, 0.f));
-		
-		v[2] = t.multiply(MatrixPers).operate(v[0]);
-		
-		t = t.multiply(Kinematics.RotateY(gamma));
-		t = t.multiply(Kinematics.Translate(3*0.195f, 0.f, 0.f));	
-		
-		v[3] = t.multiply(MatrixPers).operate(v[0]);
-		
-		for(int i = 0; i < v.length; i++) {
-			if (v[i].getEntry(3) < near) v[i] = v[i].mapDivide(near +0.1f);
-			else v[i] = v[i].mapDivide(v[i].getEntry(3));
-			
-			p[2*i] = (int)Math.round(v[i].getEntry(0)/v[i].getEntry(2) * window.getWidth()/2)+(window.getWidth()/2);
-			p[2*i+1] = (int)Math.round(v[i].getEntry(1)/v[i].getEntry(2) * window.getHeight()/2)+(window.getHeight()/2);
-			System.out.println(v[i].getEntry(0));
-			System.out.println(v[i].getEntry(1));
-			System.out.println(v[i].getEntry(2));
-		}
-		window.repaint();
-		Thread.sleep(1500);
-		}*/
-		//double[] data = Kinematics.calculateArmPosition(5, 3, 8);
-		//System.out.print(data[0] +" "+ data[1] + " "+ data[2]);
-		//int[] pos = cont.getMotorPositions();
-		//cont.rotateMotorsBy(2000, 0, -2);
-		//cont.rotateMotorsBy(0, -10, 0);
-		//System.out.println(pos[0] + " " + pos[1] + " " + pos[2]);
-		//double[] vec = Kinematics.calculateArmPosition(pos[0], pos[1], pos[2]);
-		//System.out.println(vec[0] + " " + vec[1] + " " + vec[2]);
-		/*
-		//pos = cont.rotateMotorsBy(1000, 500, 0);
-		pos = cont.rotateMotorsByDeg(-90, 90, 0);
-		
-		System.out.println(pos[0] + " " + pos[1] + " " + pos[2]);
-		vec = Kinematics.calculateArmPosition(pos[0], pos[1], pos[2]);
-		System.out.println(vec[0] + " " + vec[1] + " " + vec[2]);
-		
-		//pos = cont.rotateMotorsBy(1000, 220, 0);
-		pos = cont.rotateMotorsByDeg(0, 0, 100);
-		
-		System.out.println(pos[0] + " " + pos[1] + " " + pos[2]);
-		vec = Kinematics.calculateArmPosition(pos[0], pos[1], pos[2]);
-		System.out.println(vec[0] + " " + vec[1] + " " + vec[2]);*/
-		
-		/*while(!Button.ENTER.isDown()) {
-			pos = cont.rotateMotorsByDeg(0, 0, 1);
-			
-			System.out.println(pos[0] + " " + pos[1] + " " + pos[2]);
-			vec = cont.getArmPosition();
-			System.out.println(vec[0] + " " + vec[1] + " " + vec[2]);
-			System.out.println("Length: " + Math.sqrt(vec[0]*vec[0] + vec[1]*vec[1] + vec[2]*vec[2]));
-		}*/
-		Controller cont = new Controller();
-		
+		float[] pos = cont.ReverseCorrectDegrees(cont.getMotorPositions());
 		double[] vec = cont.getArmPosition();
+		
+		Thread.sleep(100);
+		
+		cont.rotateMotorsByDeg(0.f, 0.f, 0.f);		
+		
+		Thread.sleep(100);
+		vec[0] = 33.f;
+		vec[1] = -20.f;
+		vec[2] = 36.f;
+		
+		while(!Button.ENTER.isDown()) {
+			//pos = cont.ReverseCorrectDegrees(cont.rotateMotorsByDeg(0.f, 1, 0.f));
+			
+			//System.out.println("\n" + pos[0] + " " + pos[1] + " " + pos[2]);
+			cont.moveArmTo(33.f, (float)vec[1]+0.5f, 36.f);
+			
+			vec = cont.getArmPosition();
+			System.out.println("3D pos:" + vec[0] + " " + vec[1] + " " + vec[2]);
+			System.out.println("Length: " + Math.sqrt(vec[0]*vec[0] + vec[1]*vec[1] + vec[2]*vec[2]));
+			
+			window.repaint();
+			Thread.sleep(100);
+		}
+		
+		}
+		catch (Exception e)
+		{
+			cont.reset();
+		}
+		/*vec = cont.getArmPosition();
 		System.out.println("Pozycja startowa:");
 		System.out.println(vec[0] + " " + vec[1] + " " + vec[2]);
 		
-		cont.moveArmTo(20.0f, 5.f, 36.f);
+		cont.rotateMotorsByDeg(-30.0f, 20.f, 40.f);
 		
 		System.out.println("Pozycja przesunieta:");
 		vec = cont.getArmPosition();
@@ -149,7 +150,14 @@ public class Source {
 		cont.reset();
 		
 		System.out.println("Szybki test kinematyki odwrotnej:");
-		cont.moveArmTo(40.f, 0.f, 36.f)
+		cont.moveArmTo((float)vec[0], (float)vec[1], (float)vec[2]);
+		
+		System.out.println("Pozycja przesunieta:");
+		vec = cont.getArmPosition();
+		System.out.println(vec[0] + " " + vec[1] + " " + vec[2]);*/
+		
+		cont.reset();
+		System.exit(0);
 		
 	}
 	
