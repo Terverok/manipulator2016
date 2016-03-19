@@ -81,15 +81,17 @@ public class Controller {
 		float alphaMin = -175.f,
 		alphaMax = 80.f,
 		betaMin = -58.f,
-		betaMax = 60.f;
+		betaMax = 60.f,
+		deltaMin = -50.f,
+		deltaMax = 245.f;
 		if (alpha < alphaMin) alpha = alphaMin;
 		else if (alpha > alphaMax) alpha = alphaMax;
 		
 		if (beta < betaMin) beta = betaMin;
 		else if (beta > betaMax) beta = betaMax;
 		
-		if (delta < -50.f) delta = -50.f;
-		else if (delta > 245.f) delta = 245.f;
+		if (delta < deltaMin) delta = deltaMin;
+		else if (delta > deltaMax) delta = deltaMax;
 		
 		int[] anglesToEngine = CorrectDegrees(alpha, beta, delta);
 		Motor.A.rotateTo(anglesToEngine[0], true);
