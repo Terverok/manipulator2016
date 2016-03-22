@@ -11,7 +11,7 @@ public class Controller {
 	static float przelozenieA;
 	static float przelozenieB;
 	
-	public Controller() {
+	static{
 		// TODO Auto-generated constructor stub
 		startingPosition = getMotorPositions();
 		//Sets starting speeds - added by Marek
@@ -21,13 +21,16 @@ public class Controller {
 		Motor.A.setSpeed(Math.round(startSpeed*2.2f)); //for A to rotate faster
 		Motor.B.setSpeed(Math.round(startSpeed*0.5f));//0.04
 		Motor.C.setSpeed(Math.round(startSpeed*0.25f));//0.05
-	}
+		Motor.A.flt(true);
+		Motor.B.flt(true);
+		Motor.C.flt(true);
+	}	
 	
-	public boolean isMoving(){
+	public static boolean isMoving(){
 		return Motor.A.isMoving() || Motor.B.isMoving() || Motor.C.isMoving();
 	}
 	
-	public int[] CorrectDegrees(float[] angles) {//Added by Marek
+	public static int[] CorrectDegrees(float[] angles) {//Added by Marek
 		int[] correct = {
 				Math.round(angles[0] * przelozenieA),
 				Math.round(angles[1] * przelozenieB),
@@ -36,7 +39,7 @@ public class Controller {
 		return correct;
 	}
 	
-	public int[] CorrectDegrees(float alpha, float beta, float delta) {//Added by Marek
+	public static int[] CorrectDegrees(float alpha, float beta, float delta) {//Added by Marek
 		int[] correct = {
 				Math.round(alpha * przelozenieA),
 				Math.round(beta * przelozenieB),
@@ -61,7 +64,7 @@ public class Controller {
 		return positions;
 	}
 	
-	public int[] rotateMotorsTo(int alfa, int beta, int delta){
+	public static int[] rotateMotorsTo(int alfa, int beta, int delta){
 		Motor.A.rotateTo(alfa, true);
 		Motor.B.rotateTo(beta, true);
 		Motor.C.rotateTo(delta, true);
@@ -76,7 +79,7 @@ public class Controller {
 		return getMotorPositions();
 	}
 	
-	public int[] rotateMotorsToDeg(float alpha, float beta, float delta){ //Added by Marek, corrected for degrees
+	public static int[] rotateMotorsToDeg(float alpha, float beta, float delta){ //Added by Marek, corrected for degrees
 		//zabezpieczenia prze groźnymi kątami
 		float alphaMin = -175.f,
 		alphaMax = 80.f,
@@ -101,7 +104,7 @@ public class Controller {
 		return getMotorPositions();
 	}
 	
-	public int[] rotateMotorsBy(int alfa, int beta, int delta){
+	public static int[] rotateMotorsBy(int alfa, int beta, int delta){
 		Motor.A.rotate(alfa, true);
 		Motor.B.rotate(beta, true);
 		Motor.C.rotate(delta, true);
@@ -109,7 +112,7 @@ public class Controller {
 		return getMotorPositions();
 	}
 	
-	public int[] rotateMotorsByDeg(float alpha, float beta, float delta){ //Added by Marek, corrected for degrees
+	public static int[] rotateMotorsByDeg(float alpha, float beta, float delta){ //Added by Marek, corrected for degrees
 		//need check for dangerous angles!!!!
 		//put here!
 		int[] anglesToEngine = CorrectDegrees(alpha, beta, delta);
@@ -126,24 +129,23 @@ public class Controller {
 		return Kinematics.calculateArmPosition(angles[0], angles[1], angles[2]);
 	}
 	
-	public double[] moveArmTo(float x, float y, float z){
+	public static double[] moveArmTo(float x, float y, float z){
 				
 		for(int j = 0; j < 1; j++) {
 		
 			float[] ang = Kinematics.calculatechangeMotorPoisitons(x, y, z);
 			//Computed angles with small error send to device
 			rotateMotorsToDeg(ang[0], ang[1], ang[2]);
-		}
-		
+		}	
 		return getArmPosition();
 	}
 	
-	public float[] moveArmBy(float x, float y, float z){
+	public static float[] moveArmBy(float x, float y, float z){
 		// TODO
 		return null;
 	}
 	
-	public int[] reset(){
+	public static int[] reset(){
 		return rotateMotorsTo(startingPosition[0], startingPosition[1], startingPosition[2]);
 	}
 }
