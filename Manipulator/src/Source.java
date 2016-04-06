@@ -119,7 +119,7 @@ public class Source {
 			//pos = cont.ReverseCorrectDegrees(cont.rotateMotorsByDeg(0.f, 1, 0.f));
 			
 			//System.out.println("\n" + pos[0] + " " + pos[1] + " " + pos[2]);
-			Controller.moveArmTo((float)vec[0], (float)vec[1]+3.5f, (float)vec[2]);
+			Controller.moveArmTo(33.f, (float)vec[1]+3.5f, 36.f);
 			
 			vec = Controller.getArmPosition();
 			System.out.println("3D pos:" + vec[0] + " " + vec[1] + " " + vec[2]);

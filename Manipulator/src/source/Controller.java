@@ -10,21 +10,43 @@ public class Controller {
 	static int[] startingPosition;
 	static float przelozenieA;
 	static float przelozenieB;
+	static int startSpeed, startSpeedA, startSpeedB, startSpeedC;
 	
 	static{
-		// TODO Auto-generated constructor stub
 		startingPosition = getMotorPositions();
 		//Sets starting speeds - added by Marek
-		int startSpeed = 200;
+		startSpeed = 200;
+		startSpeedA = Math.round(startSpeed*3.5f);
+		startSpeedB = Math.round(startSpeed*0.45f);
+		startSpeedC = Math.round(startSpeed*0.1f);
 		przelozenieA = 560/16.f;
 		przelozenieB = 5.f;
-		Motor.A.setSpeed(Math.round(startSpeed*2.2f)); //for A to rotate faster
-		Motor.B.setSpeed(Math.round(startSpeed*0.5f));//0.04
-		Motor.C.setSpeed(Math.round(startSpeed*0.25f));//0.05
-		Motor.A.flt(true);
-		Motor.B.flt(true);
-		Motor.C.flt(true);
-	}	
+		Motor.A.setSpeed(startSpeedA); //for A to rotate faster
+		Motor.B.setSpeed(startSpeedB);//0.04
+		Motor.C.setSpeed(startSpeedC);//0.05
+		Motor.A.flt(false);
+		Motor.B.flt(false);
+		Motor.C.flt(false);
+		Motor.A.smoothAcceleration(false);
+		Motor.B.smoothAcceleration(false);
+		Motor.C.smoothAcceleration(false);	
+	}
+	
+	public static void setSpeed(int a, int b, int c){
+		Motor.A.setSpeed(a);
+		Motor.B.setSpeed(b);
+		Motor.C.setSpeed(c);
+	}
+	
+	public static void adjustSpeedForDistance(float alpha, float beta, float delta){
+		float maxValue = alpha;
+		if (beta > maxValue) maxValue = beta;
+		if (delta > maxValue) maxValue = delta;
+		alpha /= maxValue;
+		beta /= maxValue;
+		delta /= maxValue;
+		setSpeed(Math.round(startSpeedA*alpha), Math.round(startSpeedB*beta), Math.round(startSpeedC*delta));
+	}
 	
 	public static boolean isMoving(){
 		return Motor.A.isMoving() || Motor.B.isMoving() || Motor.C.isMoving();
