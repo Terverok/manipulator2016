@@ -71,7 +71,7 @@ class MyWindow extends JFrame {
 	
 };
 
-public class Source {	
+public class ReverseKinematicsTest {	
 
 	static int[] p = new int[2*5];
 	

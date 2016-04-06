@@ -45,6 +45,12 @@ public class Controller {
 		alpha /= maxValue;
 		beta /= maxValue;
 		delta /= maxValue;
+		if (delta < 9.0f/200.0f) {
+			float adjust = (9.0f/200.0f) / delta;
+			alpha *= adjust;
+			beta *=adjust;
+			delta = 9.0f/200.0f;
+		}													
 		setSpeed(Math.round(startSpeedA*alpha), Math.round(startSpeedB*beta), Math.round(startSpeedC*delta));
 	}
 	
@@ -168,6 +174,7 @@ public class Controller {
 	}
 	
 	public static int[] reset(){
+		setSpeed(startSpeedA, startSpeedB, startSpeedC);
 		return rotateMotorsTo(startingPosition[0], startingPosition[1], startingPosition[2]);
 	}
 }

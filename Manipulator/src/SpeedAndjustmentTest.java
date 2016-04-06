@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 import source.Controller;
 
-public class Main {
+public class SpeedAndjustmentTest {
 	public static void main(String[] args) {
 		try{
 			Scanner scanner = new Scanner(System.in);
@@ -13,6 +13,7 @@ public class Main {
 				alpha = scanner.nextFloat();
 				beta = scanner.nextFloat();
 				delta = scanner.nextFloat();
+				Controller.adjustSpeedForDistance(alpha, beta, delta);
 				Controller.rotateMotorsByDeg(alpha, beta, delta);
 				pos = Controller.ReverseCorrectDegrees(Controller.getMotorPositions());
 				System.out.println(pos[0] + " " + pos[1] + " " + pos[2]);
