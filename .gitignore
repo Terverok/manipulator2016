@@ -1,1 +1,4 @@
 Manipulator/Nowy dokument tekstowy.txt
+Manipulator/bin/*
+Manipulator/.settings/*
+Manipulator/.classpath
