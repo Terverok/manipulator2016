@@ -1,8 +1,5 @@
 package source;
 
-import org.apache.commons.math3.linear.MatrixUtils;
-import org.apache.commons.math3.linear.RealMatrix;
-import org.apache.commons.math3.linear.RealVector;
 
 import lejos.nxt.Motor;
 
