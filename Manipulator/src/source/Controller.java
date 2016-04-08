@@ -39,17 +39,22 @@ public class Controller {
 	}
 	
 	public static void adjustSpeedForDistance(float alpha, float beta, float delta){
+		alpha = Math.abs(alpha);
+		beta = Math.abs(beta);
+		delta = Math.abs(delta);
 		float maxValue = alpha;
 		if (beta > maxValue) maxValue = beta;
 		if (delta > maxValue) maxValue = delta;
 		alpha /= maxValue;
 		beta /= maxValue;
-		delta /= maxValue;
-		if (delta < 9.0f/200.0f) {
-			float adjust = (9.0f/200.0f) / delta;
+		if (delta > 0.0f) delta /= maxValue;
+		else delta = 1.0f;
+		System.out.println(alpha + " " + beta + " " + delta);
+		if (delta < 9.0f/20.0f) {
+			float adjust = (9.0f/20.0f) / delta;
 			alpha *= adjust;
 			beta *=adjust;
-			delta = 9.0f/200.0f;
+			delta = 9.0f/20.0f;
 		}													
 		setSpeed(Math.round(startSpeedA*alpha), Math.round(startSpeedB*beta), Math.round(startSpeedC*delta));
 	}
