@@ -12,7 +12,7 @@ public class Kinematics {
 	
 	public static RealMatrix RotateX(float alpha) {
 		double[][] RotX = {
-				{1.d, 0.d, 0.d, 0.d},
+				{1.d, 0.d, 0.d, 0.d}, 
 				{0.d, Math.cos(alpha), -Math.sin(alpha), 0.d},
 				{0.d, Math.sin(alpha), Math.cos(alpha), 0.d},
 				{0.d, 0.d, 0.d, 1.d}
