@@ -1,7 +1,5 @@
 package source;
-import lejos.nxt.Motor;
 
-import org.apache.commons.math3.analysis.function.Atan2;
 import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
