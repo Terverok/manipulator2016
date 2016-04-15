@@ -18,7 +18,7 @@ public class SpeedAndjustmentTest {
 				beta = scanner.nextFloat();
 				delta = scanner.nextFloat();
 				controller.adjustSpeedForDistance(alpha, beta, delta);
-				controller.getConnection().rotateMotorsBy((int)alpha, (int)beta, (int)delta);
+				controller.rotateMotorsByDeg(alpha, beta, delta);
 				pos = controller.ReverseCorrectDegrees(controller.getConnection().getMotorPositions());
 				System.out.println(pos[0] + " " + pos[1] + " " + pos[2]);
 			} while (alpha != 0.0f || beta != 0.0f || delta != 0.0f);
