@@ -23,7 +23,7 @@ public class PcConnection implements Connection{
 		Motor.C.smoothAcceleration(false);	
 	}
 	
-	public void setSpeed(int a, int b, int c) {
+	public void setSpeed(int a, int b, int c) { 
 		Motor.A.setSpeed(a);
 		Motor.B.setSpeed(b);
 		Motor.C.setSpeed(c);
