@@ -70,6 +70,6 @@ public class PcConnection implements Connection{
 	public int[] reset() {
 		setSpeed(startSpeedA, startSpeedB, startSpeedC);
 		return rotateMotorsTo(startingPosition[0], startingPosition[1], startingPosition[2]);
-	}
+	} 
 	
 }
