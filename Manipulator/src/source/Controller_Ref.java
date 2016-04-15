@@ -151,4 +151,8 @@ public class Controller_Ref {
 		// TODO
 		return null;
 	}
+	
+	public Connection getConnection() {
+		return connection;
+	}
 }
