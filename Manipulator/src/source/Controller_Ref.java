@@ -3,57 +3,42 @@ package source;
 public class Controller_Ref {
 	private Connection connection;
 	
-	private float przelozenieA;
-	private float przelozenieB;
-	private int startSpeed, startSpeedA, startSpeedB, startSpeedC;
+	private final float przelozenieA = 11.2f;
+	private final float przelozenieB = 5.f;
+	private final int startSpeed = 20, startSpeedA, startSpeedB, startSpeedC;
 	
-	public Controller_Ref(int startSpeed) {		
-		connection = new PcConnection(startSpeed);
-
-		this.startSpeed = startSpeed;
-		startSpeedA = Math.round(startSpeed * 3.5f);
-		startSpeedB = Math.round(startSpeed * 0.45f);
-		startSpeedC = Math.round(startSpeed * 0.1f);
-		przelozenieA = 560 / 16.f;
-		przelozenieB = 5.f;
-		
-		connection.setSpeed(startSpeedA, startSpeedB, startSpeedC);
-	}
 	
-	public Controller_Ref() {		
-		connection = new PcConnection(startSpeed);
+	public Controller_Ref() {
 		
-		this.startSpeed = 200;
-		startSpeedA = Math.round(startSpeed * 3.5f);
-		startSpeedB = Math.round(startSpeed * 0.45f);
-		startSpeedC = Math.round(startSpeed * 0.1f);
-		przelozenieA = 560 / 16.f;
-		przelozenieB = 5.f;
+		startSpeedA = Math.round(startSpeed * przelozenieA);
+		startSpeedB = Math.round(startSpeed * przelozenieB);
+		startSpeedC = Math.round(startSpeed);
 		
-		connection.setSpeed(startSpeedA, startSpeedB, startSpeedC);
+		
+		connection = new PcConnection(startSpeedA, startSpeedB, startSpeedC);
 	}
 	
 	public void adjustSpeedForDistance(float alpha, float beta, float delta) {
+		alpha = Math.abs(alpha);
+		beta = Math.abs(beta);
+		delta = Math.abs(delta);
 		float maxValue = alpha;
-		
-		if (beta > maxValue) {
-			maxValue = beta;
-		}
-		if (delta > maxValue) {
-			maxValue = delta;
-		}
-		
+		if (beta > maxValue) maxValue = beta;
+		if (delta > maxValue) maxValue = delta;
 		alpha /= maxValue;
 		beta /= maxValue;
-		delta /= maxValue;
-		
-		if (delta < 9.0f / 200.0f) {
-			float adjust = (9.0f / 200.0f) / delta;
+		if (delta > 0.0f) delta /= maxValue;
+		else delta = 1.0f;
+		System.out.println(alpha + " " + beta + " " + delta);
+		if (delta < 9.0f/startSpeedC) {
+			float adjust = (9.0f/startSpeedC) / delta;
 			alpha *= adjust;
-			beta *= adjust;
-			delta = 9.0f / 200.0f;
+			beta *=adjust;
+			delta = 9.0f/20.0f;
 		}													
-		connection.setSpeed(Math.round(startSpeedA * alpha), Math.round(startSpeedB * beta), Math.round(startSpeedC * delta));
+		connection.setSpeed(Math.round(startSpeedA*alpha),
+							Math.round(startSpeedB*beta),
+							Math.round(startSpeedC*delta));
 	}
 	
 	public int[] CorrectDegrees(float[] angles) {
@@ -150,5 +135,14 @@ public class Controller_Ref {
 	public float[] moveArmBy(float x, float y, float z) {
 		// TODO
 		return null;
+	}
+
+	public void reset() {
+		connection.setSpeed(startSpeedA, startSpeedB, startSpeedC);
+		connection.reset();		
+	}
+
+	public int[] getMotorPositions() {
+		return connection.getMotorPositions();
 	}
 }
