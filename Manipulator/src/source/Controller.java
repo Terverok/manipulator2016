@@ -16,7 +16,7 @@ public class Controller {
 		startSpeedA = Math.round(startSpeed*3.5f);
 		startSpeedB = Math.round(startSpeed*0.45f);
 		startSpeedC = Math.round(startSpeed*0.1f);
-		przelozenieA = 560/16.f;
+		przelozenieA = 2.8f*4.f;
 		przelozenieB = 5.f;
 		Motor.A.setSpeed(startSpeedA); //for A to rotate faster
 		Motor.B.setSpeed(startSpeedB);//0.04

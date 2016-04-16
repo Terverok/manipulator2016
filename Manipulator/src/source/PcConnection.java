@@ -4,23 +4,15 @@ import lejos.nxt.Motor;
 
 public class PcConnection implements Connection{
 	private int[] startingPosition;
-	private int startSpeedA, startSpeedB, startSpeedC;
 	
-	public PcConnection(int startSpeed) {
-		startingPosition = getMotorPositions();		
-		startSpeedA = Math.round(startSpeed * 3.5f);
-		startSpeedB = Math.round(startSpeed * 0.45f);
-		startSpeedC = Math.round(startSpeed * 0.1f);
-		
-		Motor.A.setSpeed(startSpeedA); //for A to rotate faster
-		Motor.B.setSpeed(startSpeedB);//0.04
-		Motor.C.setSpeed(startSpeedC);//0.05
-		Motor.A.flt(false);
-		Motor.B.flt(false);
-		Motor.C.flt(false);
-		Motor.A.smoothAcceleration(false);
-		Motor.B.smoothAcceleration(false);
-		Motor.C.smoothAcceleration(false);	
+	public PcConnection(){
+		startingPosition = getMotorPositions();
+	}
+	
+	
+	public PcConnection(int startSpeedA, int startSpeedB, int startSpeedC) {
+		startingPosition = getMotorPositions();
+		setSpeed(startSpeedA, startSpeedB, startSpeedC);
 	}
 	
 	public void setSpeed(int a, int b, int c) { 
@@ -68,7 +60,6 @@ public class PcConnection implements Connection{
 	}
 	
 	public int[] reset() {
-		setSpeed(startSpeedA, startSpeedB, startSpeedC);
 		return rotateMotorsTo(startingPosition[0], startingPosition[1], startingPosition[2]);
 	} 
 	
