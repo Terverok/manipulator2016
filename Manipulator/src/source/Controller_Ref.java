@@ -14,7 +14,7 @@ public class Controller_Ref {
 		startSpeedB = Math.round(startSpeed * przelozenieB);
 		startSpeedC = Math.round(startSpeed);
 		
-		
+		System.out.println(startSpeedA + " " + startSpeedB + " " + startSpeedC);
 		connection = new PcConnection(startSpeedA, startSpeedB, startSpeedC);
 	}
 	

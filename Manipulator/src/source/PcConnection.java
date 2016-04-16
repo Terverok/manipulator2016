@@ -12,10 +12,13 @@ public class PcConnection implements Connection{
 	
 	public PcConnection(int startSpeedA, int startSpeedB, int startSpeedC) {
 		startingPosition = getMotorPositions();
+
+		System.out.println(startSpeedA + " " + startSpeedB + " " + startSpeedC);
 		setSpeed(startSpeedA, startSpeedB, startSpeedC);
 	}
 	
-	public void setSpeed(int a, int b, int c) { 
+	public void setSpeed(int a, int b, int c) {
+		System.out.println(a + " " + b + " " + c);
 		Motor.A.setSpeed(a);
 		Motor.B.setSpeed(b);
 		Motor.C.setSpeed(c);
@@ -35,6 +38,7 @@ public class PcConnection implements Connection{
 	}
 	
 	public int[] rotateMotorsTo(int alfa, int beta, int delta) {
+		System.out.println(Motor.A.getSpeed() + " " + Motor.B.getSpeed() + " " + Motor.C.getSpeed());
 		Motor.A.rotateTo(alfa, true);
 		Motor.B.rotateTo(beta, true);
 		Motor.C.rotateTo(delta, true);
@@ -50,6 +54,7 @@ public class PcConnection implements Connection{
 	}
 	
 	public int[] rotateMotorsBy(int alfa, int beta, int delta) {
+		System.out.println(Motor.A.getSpeed() + " " + Motor.B.getSpeed() + " " + Motor.C.getSpeed());
 		Motor.A.rotate(alfa, true);
 		Motor.B.rotate(beta, true);
 		Motor.C.rotate(delta, true);
