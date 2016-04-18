@@ -13,12 +13,12 @@ public class PcConnection implements Connection{
 	public PcConnection(int startSpeedA, int startSpeedB, int startSpeedC) {
 		startingPosition = getMotorPositions();
 
-		System.out.println(startSpeedA + " " + startSpeedB + " " + startSpeedC);
+		//System.out.println(startSpeedA + " " + startSpeedB + " " + startSpeedC);
 		setSpeed(startSpeedA, startSpeedB, startSpeedC);
 	}
 	
 	public void setSpeed(int a, int b, int c) {
-		System.out.println(a + " " + b + " " + c);
+		//System.out.println(a + " " + b + " " + c);
 		Motor.A.setSpeed(a);
 		Motor.B.setSpeed(b);
 		Motor.C.setSpeed(c);

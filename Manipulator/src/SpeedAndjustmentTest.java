@@ -1,14 +1,13 @@
 import java.util.Scanner;
 
 import source.Controller;
-import source.Controller_Ref;
+import source.Controller;
 
 public class SpeedAndjustmentTest {
 	public static void main(String[] args) {
-		Controller_Ref controller  = new Controller_Ref();
-		try{
-			Scanner scanner = new Scanner(System.in);
-			float[] pos = controller.ReverseCorrectDegrees(controller.getMotorPositions());
+		Controller controller  = new Controller();
+		try (Scanner scanner = new Scanner(System.in);){
+			float[] pos = controller.reverseCorrectDegrees(controller.getMotorPositions());
 			System.out.println(pos[0] + " " + pos[1] + " " + pos[2]);
 			Float alpha, beta, delta;
 			do {
@@ -17,7 +16,7 @@ public class SpeedAndjustmentTest {
 				delta = scanner.nextFloat();
 				controller.adjustSpeedForDistance(alpha, beta, delta);
 				controller.rotateMotorsByDeg(alpha, beta, delta);
-				pos = controller.ReverseCorrectDegrees(controller.getMotorPositions());
+				pos = controller.reverseCorrectDegrees(controller.getMotorPositions());
 				System.out.println(pos[0] + " " + pos[1] + " " + pos[2]);
 			} while (alpha != 0.0f || beta != 0.0f || delta != 0.0f);
 			
@@ -25,7 +24,7 @@ public class SpeedAndjustmentTest {
 			e.printStackTrace();
 		} finally {
 			controller.reset();
-			float[] pos = controller.ReverseCorrectDegrees(controller.getMotorPositions());
+			float[] pos = controller.reverseCorrectDegrees(controller.getMotorPositions());
 			System.out.println(pos[0] + " " + pos[1] + " " + pos[2]);
 		}
 	}
