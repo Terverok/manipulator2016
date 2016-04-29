@@ -65,4 +65,6 @@ public class Letter implements ManipulatorShape {
     public int getShapeCount() {
         return pointList.size();
     }
+
+    
 }
