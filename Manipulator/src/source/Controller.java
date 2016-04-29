@@ -3,40 +3,40 @@ package source;
 public class Controller {
 	private Connection connection;
 	
-	private static final float przelozenieA = 11.2f;
-	private static final float przelozenieB = 5.f;
+	private static final double przelozenieA = 11.2;
+	private static final double przelozenieB = 5.0;
 	private final int startSpeed = 20, startSpeedA, startSpeedB, startSpeedC;
 	private Kinematics kinematics;
 	
 	
 	public Controller() {
 		
-		startSpeedA = Math.round(startSpeed * przelozenieA);
-		startSpeedB = Math.round(startSpeed * przelozenieB);
-		startSpeedC = Math.round(startSpeed);
+		startSpeedA = (int) Math.round(startSpeed * przelozenieA);
+		startSpeedB = (int) Math.round(startSpeed * przelozenieB);
+		startSpeedC = (int) Math.round(startSpeed);
 		
 		System.out.println(startSpeedA + " " + startSpeedB + " " + startSpeedC);
 		connection = new PcConnection(startSpeedA, startSpeedB, startSpeedC);
 		kinematics = new Kinematics(this);
 	}
 	
-	public void adjustSpeedForDistance(float alpha, float beta, float delta) {
+	public void adjustSpeedForDistance(double alpha, double beta, double delta) {
 		alpha = Math.abs(alpha);
 		beta = Math.abs(beta);
 		delta = Math.abs(delta);
-		float maxValue = alpha;
+		double maxValue = alpha;
 		if (beta > maxValue) maxValue = beta;
 		if (delta > maxValue) maxValue = delta;
 		alpha /= maxValue;
 		beta /= maxValue;
-		if (delta > 0.0f) delta /= maxValue;
-		else delta = 1.0f;
+		if (delta > 0.0) delta /= maxValue;
+		else delta = 1.0;
 		System.out.println(alpha + " " + beta + " " + delta);
-		if (delta < 9.0f/startSpeedC) {
-			float adjust = (9.0f/startSpeedC) / delta;
+		if (delta < 9.0/startSpeedC) {
+			double adjust = (9.0/startSpeedC) / delta;
 			alpha *= adjust;
 			beta *=adjust;
-			delta = 9.0f/20.0f;
+			delta = 9.0/20.0;
 		}													
 		setSpeed(startSpeedA*alpha,
 				startSpeedB*beta,
@@ -48,51 +48,51 @@ public class Controller {
 		connection.setSpeed(round[0], round[1], round[2]);
 	}
 	
-	public void setSpeed(float a, float b, float c){
+	public void setSpeed(double a, double b, double c){
 		int[] round = roundTo9(a, b, c);
 		connection.setSpeed(round[0], round[1], round[2]);
 	}
 	
-	private int[] roundTo9(float a, float b, float c){
-		a /= 9.f;
-		b /= 9.f;
-		c /= 9.f;
-		int A = Math.round(a) * 9;
-		int B = Math.round(b) * 9;
-		int C = Math.round(c) * 9;
+	private int[] roundTo9(double a, double b, double c){
+		a /= 9.0;
+		b /= 9.0;
+		c /= 9.0;
+		int A = (int) Math.round(a) * 9;
+		int B = (int) Math.round(b) * 9;
+		int C = (int) Math.round(c) * 9;
 		return new int[]{A, B, C};
 	}
 	
 	private int[] roundTo9(int a, int b, int c){
-		Float A = ((float) a)/9.f;
-		Float B = ((float) b)/9.f;
-		Float C = ((float) c)/9.f;
-		a = Math.round(A) * 9;
-		b = Math.round(B) * 9;
-		c = Math.round(C) * 9;
+		double A = ((double) a)/9.0;
+		double B = ((double) b)/9.0;
+		double C = ((double) c)/9.0;
+		a = (int) Math.round(A) * 9;
+		b = (int) Math.round(B) * 9;
+		c = (int) Math.round(C) * 9;
 		return new int[]{a, b, c};
 	}
 	
-	static public int[] correctDegrees(float[] angles) {
+	static public int[] correctDegrees(double[] angles) {
 		int[] correct = {
-				Math.round(angles[0] * przelozenieA),
-				Math.round(angles[1] * przelozenieB),
-				Math.round(angles[2])
+				(int) Math.round(angles[0] * przelozenieA),
+				(int) Math.round(angles[1] * przelozenieB),
+				(int) Math.round(angles[2])
 		};
 		return correct;
 	}
 	
-	static public int[] correctDegrees(float alpha, float beta, float delta) {
+	static public int[] correctDegrees(double alpha, double beta, double delta) {
 		int[] correct = {
-				Math.round(alpha * przelozenieA),
-				Math.round(beta * przelozenieB),
-				Math.round(delta)
+				(int) Math.round(alpha * przelozenieA),
+				(int) Math.round(beta * przelozenieB),
+				(int) Math.round(delta)
 		};
 		return correct;
 	}
 	
-	static public float[] reverseCorrectDegrees(int[] angles) {
-		float[] rev = {
+	static public double[] reverseCorrectDegrees(int[] angles) {
+		double[] rev = {
 				angles[0] / przelozenieA,
 				angles[1] / przelozenieB,
 				angles[2]
@@ -100,13 +100,13 @@ public class Controller {
 		return rev;
 	}
 	
-	public int[] rotateMotorsToDeg(float alpha, float beta, float delta) {		
-		float alphaMin = -175.f,
-		alphaMax = 80.f,
-		betaMin = -58.f,
-		betaMax = 60.f,
-		deltaMin = -50.f,
-		deltaMax = 245.f;
+	public int[] rotateMotorsToDeg(double alpha, double beta, double delta) {		
+		double alphaMin = -175.0,
+		alphaMax = 80.0,
+		betaMin = -58.0,
+		betaMax = 60.0,
+		deltaMin = -50.0,
+		deltaMax = 245.0;
 		
 		if (alpha < alphaMin) {
 			alpha = alphaMin;
@@ -138,7 +138,7 @@ public class Controller {
 		return connection.getMotorPositions();
 	}
 	
-	public int[] rotateMotorsByDeg(float alpha, float beta, float delta) {
+	public int[] rotateMotorsByDeg(double alpha, double beta, double delta) {
 		//need check for dangerous angles!!!!
 		//put here!
 		int[] anglesToEngine = correctDegrees(alpha, beta, delta);
@@ -151,20 +151,20 @@ public class Controller {
 	
 	public double[] getArmPosition() {
 		int[] motorPositions = connection.getMotorPositions();
-		float[] angles = reverseCorrectDegrees(motorPositions);
+		double[] angles = reverseCorrectDegrees(motorPositions);
 		return kinematics.calculateArmPosition(angles[0], angles[1], angles[2]);
 	}
 	
-	public double[] moveArmTo(float x, float y, float z) {		
+	public double[] moveArmTo(double x, double y, double z) {		
 		for(int j = 0; j < 1; j++) {		
-			float[] ang = kinematics.calculatechangeMotorPoisitons(x, y, z);
+			double[] ang = kinematics.calculatechangeMotorPoisitons(x, y, z);
 			//Computed angles with small error send to device
 			rotateMotorsToDeg(ang[0], ang[1], ang[2]);
 		}	
 		return getArmPosition();
 	}
 	
-	public float[] moveArmBy(float x, float y, float z) {
+	public double[] moveArmBy(double x, double y, double z) {
 		// TODO
 		return null;
 	}
