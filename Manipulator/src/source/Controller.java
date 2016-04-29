@@ -5,7 +5,7 @@ public class Controller {
 	
 	private static final double przelozenieA = 11.2;
 	private static final double przelozenieB = 5.0;
-	private final int startSpeed = 20, startSpeedA, startSpeedB, startSpeedC;
+	private final int startSpeed = 45, startSpeedA, startSpeedB, startSpeedC;
 	private Kinematics kinematics;
 	
 	
