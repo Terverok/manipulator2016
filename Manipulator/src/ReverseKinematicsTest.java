@@ -104,7 +104,7 @@ public class ReverseKinematicsTest {
 		Controller controller = new Controller();
 		try{
 		
-		float[] pos = Controller.reverseCorrectDegrees(controller.getMotorPositions());
+		double[] pos = Controller.reverseCorrectDegrees(controller.getMotorPositions());
 		double[] vec = controller.getArmPosition();
 		
 		Thread.sleep(100);

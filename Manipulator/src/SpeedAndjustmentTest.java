@@ -6,7 +6,7 @@ public class SpeedAndjustmentTest {
 	public static void main(String[] args) {
 		Controller controller  = new Controller();
 		try (Scanner scanner = new Scanner(System.in);){
-			float[] pos = controller.reverseCorrectDegrees(controller.getMotorPositions());
+			double[] pos = controller.reverseCorrectDegrees(controller.getMotorPositions());
 			System.out.println(pos[0] + " " + pos[1] + " " + pos[2]);
 			Float alpha, beta, delta;
 			do {
@@ -23,7 +23,7 @@ public class SpeedAndjustmentTest {
 			e.printStackTrace();
 		} finally {
 			controller.reset();
-			float[] pos = controller.reverseCorrectDegrees(controller.getMotorPositions());
+			double[] pos = controller.reverseCorrectDegrees(controller.getMotorPositions());
 			System.out.println(pos[0] + " " + pos[1] + " " + pos[2]);
 		}
 	}
