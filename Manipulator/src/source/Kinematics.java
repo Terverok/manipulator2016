@@ -6,6 +6,11 @@ import org.apache.commons.math3.linear.RealVector;
 //Marek Tkaczyk
 public class Kinematics {
 	public static float TachometrPerRadian = (float) (Math.PI / 180.f);
+	private Controller controller;
+	
+	public Kinematics(Controller controller){
+		this.controller = controller;
+	}
 	
 	
 	public static RealMatrix RotateX(float alpha) {
@@ -65,8 +70,8 @@ public class Kinematics {
 	public static double[] calculateArmPosition(float alfa, float beta, float delta) {
 		float theta[] = new float[3];
 		theta[0] = (float)Math.toRadians(alfa);
-		theta[1] = (float)Math.toRadians(beta); 
-		theta[2] = (float)Math.toRadians(delta - 90.f);
+		theta[1] = (float)Math.toRadians(beta + 55.f); 
+		theta[2] = (float)Math.toRadians(delta - 135.f);
 		
 		//beta przeliczyć na kąt u góry(bezpośrednio do Motoru C)
 		//theta[1] = ComputeThetaC(theta[1]);// + (float)Math.toRadians(-90.0f);
@@ -106,9 +111,9 @@ public class Kinematics {
 		return MatrixUtils.createRealMatrix(jacobian);
 	}
 
-	public static float[] calculatechangeMotorPoisitons(float x, float y, float z) {
+	public float[] calculatechangeMotorPoisitons(float x, float y, float z) {
 		//we need something better
-		double[] positionNow = Controller.getArmPosition();
+		double[] positionNow = controller.getArmPosition();
 		double[] positionTo = {x, y, z, 1.0f};
 		RealVector To = MatrixUtils.createRealVector(positionTo);
 		
@@ -116,7 +121,7 @@ public class Kinematics {
 		final RealMatrix InvJac = calculateTransJacobian();
 				
 		double[] dtheta = new double[3];
-		float[] ang = Controller.ReverseCorrectDegrees(Controller.getMotorPositions());
+		float[] ang = Controller.reverseCorrectDegrees(controller.getMotorPositions());
 		
 		for(int i = 0; i < 400; i++) {
 			RealVector Now = MatrixUtils.createRealVector(positionNow);

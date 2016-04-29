@@ -3,9 +3,10 @@ package source;
 public class Controller {
 	private Connection connection;
 	
-	private final float przelozenieA = 11.2f;
-	private final float przelozenieB = 5.f;
+	private static final float przelozenieA = 11.2f;
+	private static final float przelozenieB = 5.f;
 	private final int startSpeed = 20, startSpeedA, startSpeedB, startSpeedC;
+	private Kinematics kinematics;
 	
 	
 	public Controller() {
@@ -16,6 +17,7 @@ public class Controller {
 		
 		System.out.println(startSpeedA + " " + startSpeedB + " " + startSpeedC);
 		connection = new PcConnection(startSpeedA, startSpeedB, startSpeedC);
+		kinematics = new Kinematics(this);
 	}
 	
 	public void adjustSpeedForDistance(float alpha, float beta, float delta) {
@@ -52,9 +54,9 @@ public class Controller {
 	}
 	
 	private int[] roundTo9(float a, float b, float c){
-		a /= a/9.f;
-		b /= b/9.f;
-		c /= c/9.f;
+		a /= 9.f;
+		b /= 9.f;
+		c /= 9.f;
 		int A = Math.round(a) * 9;
 		int B = Math.round(b) * 9;
 		int C = Math.round(c) * 9;
@@ -71,7 +73,7 @@ public class Controller {
 		return new int[]{a, b, c};
 	}
 	
-	public int[] correctDegrees(float[] angles) {
+	static public int[] correctDegrees(float[] angles) {
 		int[] correct = {
 				Math.round(angles[0] * przelozenieA),
 				Math.round(angles[1] * przelozenieB),
@@ -80,7 +82,7 @@ public class Controller {
 		return correct;
 	}
 	
-	public int[] correctDegrees(float alpha, float beta, float delta) {
+	static public int[] correctDegrees(float alpha, float beta, float delta) {
 		int[] correct = {
 				Math.round(alpha * przelozenieA),
 				Math.round(beta * przelozenieB),
@@ -89,7 +91,7 @@ public class Controller {
 		return correct;
 	}
 	
-	public float[] reverseCorrectDegrees(int[] angles) {
+	static public float[] reverseCorrectDegrees(int[] angles) {
 		float[] rev = {
 				angles[0] / przelozenieA,
 				angles[1] / przelozenieB,
@@ -150,12 +152,12 @@ public class Controller {
 	public double[] getArmPosition() {
 		int[] motorPositions = connection.getMotorPositions();
 		float[] angles = reverseCorrectDegrees(motorPositions);
-		return Kinematics.calculateArmPosition(angles[0], angles[1], angles[2]);
+		return kinematics.calculateArmPosition(angles[0], angles[1], angles[2]);
 	}
 	
 	public double[] moveArmTo(float x, float y, float z) {		
 		for(int j = 0; j < 1; j++) {		
-			float[] ang = Kinematics.calculatechangeMotorPoisitons(x, y, z);
+			float[] ang = kinematics.calculatechangeMotorPoisitons(x, y, z);
 			//Computed angles with small error send to device
 			rotateMotorsToDeg(ang[0], ang[1], ang[2]);
 		}	

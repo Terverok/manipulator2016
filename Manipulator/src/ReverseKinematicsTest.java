@@ -101,14 +101,15 @@ public class ReverseKinematicsTest {
 				{0.d, 0.d, -1.d, 0.d}
 		};
 		RealMatrix MatrixPers = MatrixUtils.createRealMatrix(PerspectiveMatdata);*/
+		Controller controller = new Controller();
 		try{
 		
-		float[] pos = Controller.ReverseCorrectDegrees(Controller.getMotorPositions());
-		double[] vec = Controller.getArmPosition();
+		float[] pos = Controller.reverseCorrectDegrees(controller.getMotorPositions());
+		double[] vec = controller.getArmPosition();
 		
 		Thread.sleep(100);
 		
-		Controller.rotateMotorsByDeg(0.f, 0.f, 0.f);		
+		controller.rotateMotorsByDeg(0.f, 0.f, 0.f);		
 		
 		Thread.sleep(100);
 		vec[0] = 33.f;
@@ -119,9 +120,9 @@ public class ReverseKinematicsTest {
 			//pos = cont.ReverseCorrectDegrees(cont.rotateMotorsByDeg(0.f, 1, 0.f));
 			
 			//System.out.println("\n" + pos[0] + " " + pos[1] + " " + pos[2]);
-			Controller.moveArmTo(33.f, (float)vec[1]+3.5f, 36.f);
+			controller.moveArmTo(33.f, (float)vec[1]+3.5f, 36.f);
 			
-			vec = Controller.getArmPosition();
+			vec = controller.getArmPosition();
 			System.out.println("3D pos:" + vec[0] + " " + vec[1] + " " + vec[2]);
 			System.out.println("Length: " + Math.sqrt(vec[0]*vec[0] + vec[1]*vec[1] + vec[2]*vec[2]));
 			
@@ -132,7 +133,7 @@ public class ReverseKinematicsTest {
 		}
 		catch (Exception e)
 		{
-			Controller.reset();
+			controller.reset();
 		}
 		/*vec = cont.getArmPosition();
 		System.out.println("Pozycja startowa:");
@@ -153,7 +154,7 @@ public class ReverseKinematicsTest {
 		vec = cont.getArmPosition();
 		System.out.println(vec[0] + " " + vec[1] + " " + vec[2]);*/
 		
-		Controller.reset();
+		controller.reset();
 		System.exit(0);
 		
 	}
