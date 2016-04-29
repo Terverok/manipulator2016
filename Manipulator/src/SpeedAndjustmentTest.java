@@ -1,7 +1,6 @@
 import java.util.Scanner;
 
 import source.Controller;
-import source.Controller;
 
 public class SpeedAndjustmentTest {
 	public static void main(String[] args) {
