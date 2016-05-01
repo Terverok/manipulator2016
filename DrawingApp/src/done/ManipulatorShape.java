@@ -9,5 +9,7 @@ public interface ManipulatorShape {
     Shape[] getWhole();
     Shape getStep(int step);
     int getShapeCount();
+    double getWidth();
+    double getHeight();
     void setShift(int xShift, int yShift);
 }

@@ -49,7 +49,9 @@ public class DrawLetters extends JFrame {
     }
 
     public void addLetter(ManipulatorShape shape) {
+        shape.setShift(leftShift + 10, 10);
         letterList.add(shape);
+        leftShift = (int) shape.getWidth();
     }
 
     public void draw() {

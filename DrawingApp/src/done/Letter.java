@@ -66,5 +66,27 @@ public class Letter implements ManipulatorShape {
         return pointList.size();
     }
 
-    
+    public double getWidth() {
+        double max = 0;
+
+        for (Point point : pointList) {
+            if(point.getX() > max) {
+                max = point.getX();
+            }
+        }
+
+        return max;
+    }
+
+    public double getHeight() {
+        double max = 0;
+
+        for (Point point : pointList) {
+            if(point.getY() > max) {
+                max = point.getY();
+            }
+        }
+
+        return max;
+    }
 }
