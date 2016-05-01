@@ -1,4 +1,6 @@
-package done;
+package done.app;
+
+import done.letters.ManipulatorShape;
 
 import javax.swing.*;
 import java.awt.*;
