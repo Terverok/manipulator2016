@@ -8,8 +8,8 @@ public class Main {
     public static void main(String[] args) {
         DrawLetters drawLetters = new DrawLetters();
 
-        drawLetters.addLetter(ConcreteShapes.letterA());
-        drawLetters.addLetter(ConcreteShapes.letterB());
-        drawLetters.addLetter(ConcreteShapes.letterC());
+        drawLetters.addLetter(ConcreteShapes.letterF());
+//        drawLetters.addLetter(ConcreteShapes.letterB());
+//        drawLetters.addLetter(ConcreteShapes.letterC());
     }
 }

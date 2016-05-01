@@ -44,4 +44,43 @@ public class ConcreteShapes {
 
         return new Letter(list);
     }
+
+    public static Letter letterD() {
+        List<Point> list = new LinkedList<>();
+        list.add(new Point(x, y));
+        list.add(new Point(x, y - 80));
+        list.add(new Point(x + 15, y - 80));
+        list.add(new Point(x + 40, y - 40));
+        list.add(new Point(x + 15, y));
+        list.add(new Point(x, y));
+
+        return new Letter(list);
+    }
+
+    public static Letter letterE() {
+        List<Point> list = new LinkedList<>();
+        list.add(new Point(x, y));
+        list.add(new Point(x, y - 80));
+        list.add(new Point(x + 40, y - 80));
+        list.add(new Point(x, y - 80));
+        list.add(new Point(x, y - 40));
+        list.add(new Point(x + 40, y - 40));
+        list.add(new Point(x, y - 40));
+        list.add(new Point(x, y));
+        list.add(new Point(x + 40, y ));
+
+        return new Letter(list);
+    }
+
+    public static Letter letterF() {
+        List<Point> list = new LinkedList<>();
+        list.add(new Point(x, y));
+        list.add(new Point(x, y - 80));
+        list.add(new Point(x + 40, y - 80));
+        list.add(new Point(x, y - 80));
+        list.add(new Point(x, y - 40));
+        list.add(new Point(x + 40, y - 40));
+
+        return new Letter(list);
+    }
 }
