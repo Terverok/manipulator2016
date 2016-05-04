@@ -8,7 +8,7 @@ public class Main {
     public static void main(String[] args) {
         DrawLetters drawLetters = new DrawLetters();
 
-        drawLetters.addLetter(ConcreteShapes.letterF());
+        drawLetters.addLetter(ConcreteShapes.letterZ());
 //        drawLetters.addLetter(ConcreteShapes.letterB());
 //        drawLetters.addLetter(ConcreteShapes.letterC());
     }

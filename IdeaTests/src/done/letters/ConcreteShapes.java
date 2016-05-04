@@ -83,4 +83,221 @@ public class ConcreteShapes {
 
         return new Letter(list);
     }
+
+    public static Letter letterG() {
+        List<Point> list = new LinkedList<>();
+        list.add(new Point(x + 40, y - 80));
+        list.add(new Point(x, y - 80));
+        list.add(new Point(x, y));
+        list.add(new Point(x + 40, y));
+        list.add(new Point(x + 40, y - 40));
+        list.add(new Point(x + 10, y - 40));
+
+        return new Letter(list);
+    }
+
+    public static Letter letterH() {
+        List<Point> list = new LinkedList<>();
+        list.add(new Point(x, y - 80));
+        list.add(new Point(x, y));
+        list.add(new Point(x, y - 40));
+        list.add(new Point(x + 40, y - 40));
+        list.add(new Point(x + 40, y - 80));
+        list.add(new Point(x + 40, y));
+
+        return new Letter(list);
+    }
+
+    public static Letter letterI() {
+        List<Point> list = new LinkedList<>();
+        list.add(new Point(x + 20, y - 80));
+        list.add(new Point(x + 20, y));
+
+        return new Letter(list);
+    }
+
+    public static Letter letterJ() {
+        List<Point> list = new LinkedList<>();
+        list.add(new Point(x + 30, y - 80));
+        list.add(new Point(x + 30, y));
+        list.add(new Point(x + 10, y));
+        list.add(new Point(x + 10, y - 20));
+
+        return new Letter(list);
+    }
+
+    public static Letter letterK() {
+        List<Point> list = new LinkedList<>();
+        list.add(new Point(x, y - 80));
+        list.add(new Point(x, y));
+        list.add(new Point(x, y - 40));
+        list.add(new Point(x + 40, y - 80));
+        list.add(new Point(x, y - 40));
+        list.add(new Point(x + 40, y));
+
+        return new Letter(list);
+    }
+
+    public static Letter letterL() {
+        List<Point> list = new LinkedList<>();
+        list.add(new Point(x, y - 80));
+        list.add(new Point(x, y));
+        list.add(new Point(x + 40, y));
+
+        return new Letter(list);
+    }
+
+    public static Letter letterM() {
+        List<Point> list = new LinkedList<>();
+        list.add(new Point(x, y));
+        list.add(new Point(x, y - 80));
+        list.add(new Point(x + 20, y - 40));
+        list.add(new Point(x + 40, y - 80));
+        list.add(new Point(x + 40, y));
+
+        return new Letter(list);
+    }
+
+    public static Letter letterN() {
+        List<Point> list = new LinkedList<>();
+        list.add(new Point(x, y));
+        list.add(new Point(x, y - 80));
+        list.add(new Point(x + 40, y));
+        list.add(new Point(x + 40, y - 80));
+
+        return new Letter(list);
+    }
+
+    public static Letter letterO() {
+        List<Point> list = new LinkedList<>();
+        list.add(new Point(x, y - 60));
+        list.add(new Point(x, y - 20));
+        list.add(new Point(x + 10, y));
+        list.add(new Point(x + 30, y));
+        list.add(new Point(x + 40, y - 20));
+        list.add(new Point(x + 40, y - 60));
+        list.add(new Point(x + 30, y - 80));
+        list.add(new Point(x + 10, y - 80));
+        list.add(new Point(x, y - 60));
+
+        return new Letter(list);
+    }
+
+    public static Letter letterP() {
+        List<Point> list = new LinkedList<>();
+        list.add(new Point(x, y));
+        list.add(new Point(x, y - 80));
+        list.add(new Point(x + 30, y - 80));
+        list.add(new Point(x + 30, y - 50));
+        list.add(new Point(x, y - 50));
+
+        return new Letter(list);
+    }
+
+    public static Letter letterQ() {
+        //TODO
+        List<Point> list = new LinkedList<>();
+        list.add(new Point(x, y - 60));
+        list.add(new Point(x, y - 20));
+        list.add(new Point(x + 10, y));
+        list.add(new Point(x + 30, y));
+        list.add(new Point(x + 40, y - 20));
+        list.add(new Point(x + 40, y - 60));
+        list.add(new Point(x + 30, y - 80));
+        list.add(new Point(x + 10, y - 80));
+        list.add(new Point(x, y - 60));
+
+        return new Letter(list);
+    }
+
+    public static Letter letterR() {
+        List<Point> list = new LinkedList<>();
+        list.add(new Point(x, y));
+        list.add(new Point(x, y - 80));
+        list.add(new Point(x + 30, y - 80));
+        list.add(new Point(x + 30, y - 50));
+        list.add(new Point(x, y - 50));
+        list.add(new Point(x + 40, y));
+
+        return new Letter(list);
+    }
+
+    public static Letter letterS() {
+        List<Point> list = new LinkedList<>();
+        list.add(new Point(x + 40, y - 60));
+        list.add(new Point(x + 30, y - 80));
+        list.add(new Point(x + 10, y - 80));
+        list.add(new Point(x, y - 60));
+        list.add(new Point(x, y - 50));
+        list.add(new Point(x + 40, y - 30));
+        list.add(new Point(x + 40, y - 20));
+        list.add(new Point(x + 30, y));
+        list.add(new Point(x + 10, y));
+        list.add(new Point(x, y - 20));
+
+        return new Letter(list);
+    }
+
+    public static Letter letterT() {
+        List<Point> list = new LinkedList<>();
+        list.add(new Point(x + 20, y));
+        list.add(new Point(x + 20, y - 80));
+        list.add(new Point(x + 40, y - 80));
+        list.add(new Point(x, y - 80));
+
+        return new Letter(list);
+    }
+
+    public static Letter letterU() {
+        List<Point> list = new LinkedList<>();
+        list.add(new Point(x, y - 80));
+        list.add(new Point(x, y));
+        list.add(new Point(x + 40, y));
+        list.add(new Point(x + 40, y - 80));
+
+        return new Letter(list);
+    }
+
+    public static Letter letterW() {
+        List<Point> list = new LinkedList<>();
+        list.add(new Point(x, y - 80));
+        list.add(new Point(x + 10, y));
+        list.add(new Point(x + 20, y - 80));
+        list.add(new Point(x + 30, y));
+        list.add(new Point(x + 40, y - 80));
+
+        return new Letter(list);
+    }
+
+    public static Letter letterX() {
+        List<Point> list = new LinkedList<>();
+        list.add(new Point(x, y - 80));
+        list.add(new Point(x + 40, y));
+        list.add(new Point(x + 20, y - 40));
+        list.add(new Point(x + 40, y - 80));
+        list.add(new Point(x, y));
+
+        return new Letter(list);
+    }
+
+    public static Letter letterY() {
+        List<Point> list = new LinkedList<>();
+        list.add(new Point(x + 20, y));
+        list.add(new Point(x + 20, y - 50));
+        list.add(new Point(x + 40, y - 80));
+        list.add(new Point(x + 20, y - 50));
+        list.add(new Point(x, y - 80));
+
+        return new Letter(list);
+    }
+
+    public static Letter letterZ() {
+        List<Point> list = new LinkedList<>();
+        list.add(new Point(x, y - 80));
+        list.add(new Point(x + 40, y - 80));
+        list.add(new Point(x, y));
+        list.add(new Point(x + 40, y));
+
+        return new Letter(list);
+    }
 }
