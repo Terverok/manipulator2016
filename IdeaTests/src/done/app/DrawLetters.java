@@ -1,5 +1,6 @@
 package done.app;
 
+import done.letters.Letter;
 import done.letters.ManipulatorShape;
 
 import javax.swing.*;
@@ -14,23 +15,40 @@ import java.util.List;
 public class DrawLetters extends JFrame {
     private List<ManipulatorShape> letterList;
     private int leftShift;
+    private int topShift;
     private MyJPanel panel;
+    private int panelWidth, panelHeight;
 
     public DrawLetters() throws HeadlessException {
         letterList = new LinkedList<>();
-        leftShift = 0;
+        leftShift = 10;
+        topShift = 10;
+
+        panelWidth = 750;
+        panelHeight = 300;
+
+        init();
+    }
+
+    public DrawLetters(int panelWidth, int panelHeight) throws HeadlessException {
+        this.panelWidth = panelWidth;
+        this.panelHeight = panelHeight;
+
+        letterList = new LinkedList<>();
+        leftShift = 10;
+        topShift = 10;
 
         init();
     }
 
     private void init() {
-        setSize(400, 400);
+        setSize(panelWidth + 50, panelHeight + 100);
         setVisible(true);
         setLayout(null);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        JButton button = new JButton("Button");
-        button.setBounds(250, 250, 50, 50);
+        JButton button = new JButton("Draw");
+        button.setBounds(250, 310, 80, 50);
         button.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -41,7 +59,7 @@ public class DrawLetters extends JFrame {
         add(button);
 
         panel = new MyJPanel(getGraphics());
-        panel.setBounds(0, 0, 200, 200);
+        panel.setBounds(5, 5, panelWidth, panelHeight);
         panel.setBorder(BorderFactory.createLineBorder(Color.RED));
 
         add(panel);
@@ -51,9 +69,20 @@ public class DrawLetters extends JFrame {
     }
 
     public void addLetter(ManipulatorShape shape) {
-        shape.setShift(leftShift + 10, 10);
+        shape.setShift(leftShift, topShift);
         letterList.add(shape);
         leftShift = (int) shape.getWidth();
+
+        if(leftShift + 100 > panelWidth) {
+            topShift = 120;
+            leftShift = 10;
+        }
+    }
+
+    public void addLetter(List<Letter> list) {
+        for(Letter shape : list) {
+            addLetter(shape);
+        }
     }
 
     public void draw() {

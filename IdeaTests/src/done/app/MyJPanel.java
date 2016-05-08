@@ -12,15 +12,18 @@ import java.util.List;
 public class MyJPanel extends JPanel {
     private List<ManipulatorShape> letterList;
     private Graphics2D graphics;
+    private boolean showSteps;
 
     public MyJPanel(List<ManipulatorShape> letterList) {
         super();
         this.letterList = letterList;
+        showSteps = false;
     }
 
     public MyJPanel(Graphics graphics) {
         super();
         this.graphics = (Graphics2D) graphics;
+        showSteps = false;
     }
 
     @Override
@@ -40,11 +43,17 @@ public class MyJPanel extends JPanel {
             System.out.println("draw: " + tmp.getBounds().toString());
             graphics.draw(tmp);
 
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            if(showSteps) {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }
+    }
+
+    public void setShowSteps(boolean showSteps) {
+        this.showSteps = showSteps;
     }
 }

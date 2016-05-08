@@ -300,4 +300,36 @@ public class ConcreteShapes {
 
         return new Letter(list);
     }
+    
+    public static List<Letter> getAlphabet() {
+        List<Letter> list = new LinkedList<>();
+
+        list.add(letterA());
+        list.add(letterB());
+        list.add(letterC());
+        list.add(letterD());
+        list.add(letterE());
+        list.add(letterF());
+        list.add(letterG());
+        list.add(letterH());
+        list.add(letterI());
+        list.add(letterJ());
+        list.add(letterK());
+        list.add(letterL());
+        list.add(letterM());
+        list.add(letterN());
+        list.add(letterO());
+        list.add(letterP());
+        list.add(letterQ());
+        list.add(letterR());
+        list.add(letterS());
+        list.add(letterT());
+        list.add(letterU());
+        list.add(letterW());
+        list.add(letterX());
+        list.add(letterY());
+        list.add(letterZ());
+        
+        return list;
+    }
 }
