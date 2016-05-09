@@ -10,13 +10,13 @@ import java.util.List;
  * Created by Pawel on 2016-04-28.
  */
 public class MyJPanel extends JPanel {
-    private List<ManipulatorShape> letterList;
+    private List<ManipulatorShape> shapeList;
     private Graphics2D graphics;
     private boolean showSteps;
 
     public MyJPanel(List<ManipulatorShape> letterList) {
         super();
-        this.letterList = letterList;
+        this.shapeList = letterList;
         showSteps = false;
     }
 
