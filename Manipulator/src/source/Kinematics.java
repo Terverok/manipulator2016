@@ -5,7 +5,7 @@ import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
 //Marek Tkaczyk
 public class Kinematics {
-	public static double TachometrPerRadian = Math.PI / 180.0;
+	private static double TachometrPerRadian = Math.PI / 180.0;
 	private Controller controller;
 	
 	public Kinematics(Controller controller){
@@ -111,7 +111,7 @@ public class Kinematics {
 		return MatrixUtils.createRealMatrix(jacobian);
 	}
 
-	public double[] calculatechangeMotorPoisitons(double x, double y, double z) {
+	public double[] calculateChangeMotorPoisitons(double x, double y, double z, double[] angles) {
 		//we need something better
 		double[] positionNow = controller.getArmPosition();
 		double[] positionTo = {x, y, z, 1.0};

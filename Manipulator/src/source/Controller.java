@@ -73,7 +73,7 @@ public class Controller {
 		return new int[]{a, b, c};
 	}
 	
-	static public int[] correctDegrees(double[] angles) {
+	static private int[] correctDegrees(double[] angles) {
 		int[] correct = {
 				(int) Math.round(angles[0] * przelozenieA),
 				(int) Math.round(angles[1] * przelozenieB),
@@ -82,7 +82,7 @@ public class Controller {
 		return correct;
 	}
 	
-	static public int[] correctDegrees(double alpha, double beta, double delta) {
+	static private int[] correctDegrees(double alpha, double beta, double delta) {
 		int[] correct = {
 				(int) Math.round(alpha * przelozenieA),
 				(int) Math.round(beta * przelozenieB),
@@ -91,7 +91,7 @@ public class Controller {
 		return correct;
 	}
 	
-	static public double[] reverseCorrectDegrees(int[] angles) {
+	static private double[] reverseCorrectDegrees(int[] angles) {
 		double[] rev = {
 				angles[0] / przelozenieA,
 				angles[1] / przelozenieB,
@@ -142,6 +142,7 @@ public class Controller {
 		//need check for dangerous angles!!!!
 		//put here!
 		int[] anglesToEngine = correctDegrees(alpha, beta, delta);
+		adjustSpeedForDistance(alpha, beta, delta);
 		connection.rotateMotorsBy(anglesToEngine[0], anglesToEngine[1], anglesToEngine[2]);
 		while (connection.isMoving()) {
 			continue; //poczekaj a� silniki si� zatrzymaj�
@@ -155,12 +156,13 @@ public class Controller {
 		return kinematics.calculateArmPosition(angles[0], angles[1], angles[2]);
 	}
 	
-	public double[] moveArmTo(double x, double y, double z) {		
+	public double[] moveArmTo(double x, double y, double z) {
+		double[] ang = getArmPosition();
 		for(int j = 0; j < 1; j++) {		
-			double[] ang = kinematics.calculatechangeMotorPoisitons(x, y, z);
+			ang = kinematics.calculatechangeMotorPoisitons(x, y, z, ang);
 			//Computed angles with small error send to device
-			rotateMotorsToDeg(ang[0], ang[1], ang[2]);
-		}	
+		}
+		rotateMotorsToDeg(ang[0], ang[1], ang[2]);
 		return getArmPosition();
 	}
 	
