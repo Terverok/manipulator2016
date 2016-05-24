@@ -113,7 +113,7 @@ public class Kinematics {
 
 	public double[] calculateChangeMotorPoisitons(double x, double y, double z, double[] angles) {
 		//we need something better
-		double[] positionNow = controller.getArmPosition();
+		double[] positionNow = calculateArmPosition(angles[0], angles[1], angles[2]);
 		double[] positionTo = {x, y, z, 1.0};
 		RealVector To = MatrixUtils.createRealVector(positionTo);
 		
@@ -121,7 +121,6 @@ public class Kinematics {
 		final RealMatrix InvJac = calculateTransJacobian();
 				
 		double[] dtheta = new double[3];
-		double[] ang = controller.reverseCorrectDegrees(controller.getMotorPositions());
 		
 		for(int i = 0; i < 400; i++) {
 			RealVector Now = MatrixUtils.createRealVector(positionNow);
@@ -131,18 +130,18 @@ public class Kinematics {
 			//small change of angles on manipulator
 			dtheta = InvJac.operate(Now).mapMultiply(0.1d).toArray();
 			
-			ang[0] += dtheta[0];
-			ang[1] += dtheta[1];
-			ang[2] += dtheta[2];
+			angles[0] += dtheta[0];
+			angles[1] += dtheta[1];
+			angles[2] += dtheta[2];
 			
 			/*System.out.println(positionNow[0] + " " + positionNow[1] + " " + positionNow[2]);
 			System.out.println("Length: " + Math.sqrt(positionNow[0]*positionNow[0] + positionNow[1]*positionNow[1] + positionNow[2]*positionNow[2]));
 			System.out.println("Theta: " + dtheta[0] + " " +dtheta[1] + " " + dtheta[2]);*/
 			
-			positionNow = Kinematics.calculateArmPosition(ang[0], ang[1], ang[2]);
+			positionNow = Kinematics.calculateArmPosition(angles[0], angles[1], angles[2]);
 		}
 			
-		return ang;
+		return angles;
 	}
 
 }

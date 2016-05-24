@@ -153,13 +153,13 @@ public class Controller {
 	public double[] getArmPosition() {
 		int[] motorPositions = connection.getMotorPositions();
 		double[] angles = reverseCorrectDegrees(motorPositions);
-		return kinematics.calculateArmPosition(angles[0], angles[1], angles[2]);
+		return Kinematics.calculateArmPosition(angles[0], angles[1], angles[2]);
 	}
 	
 	public double[] moveArmTo(double x, double y, double z) {
-		double[] ang = getArmPosition();
+		double[] ang = reverseCorrectDegrees(getMotorPositions());
 		for(int j = 0; j < 1; j++) {		
-			ang = kinematics.calculatechangeMotorPoisitons(x, y, z, ang);
+			ang = kinematics.calculateChangeMotorPoisitons(x, y, z, ang);
 			//Computed angles with small error send to device
 		}
 		rotateMotorsToDeg(ang[0], ang[1], ang[2]);
