@@ -12,7 +12,7 @@ public class MinimumSpeedTest {
 			do {
 				speed = scanner.nextInt();
 				controller.setSpeed(0, 0, speed);
-				controller.rotateMotorsByDeg(0, 0, distance);
+				controller.rotateJointsByDeg(0, 0, distance);
 				distance = distance * (-1);
 			} while (speed != 0);
 			

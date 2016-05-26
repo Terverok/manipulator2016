@@ -13,7 +13,7 @@ public class MinimumDistanceTest {
 			do {
 				distance = scanner.nextInt();
 				controller.setSpeed(0, 0, 45);
-				controller.rotateMotorsByDeg(0, 0, direction * distance);
+				controller.rotateJointsByDeg(0, 0, direction * distance);
 				direction *= (-1);
 				motorPositions = controller.getMotorPositions();
 				System.out.println(motorPositions[0] + " " + motorPositions[1] + " " + motorPositions[2]);

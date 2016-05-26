@@ -13,7 +13,7 @@ public class SpeedAndjustmentTest {
 				alpha = scanner.nextFloat();
 				beta = scanner.nextFloat();
 				delta = scanner.nextFloat();
-				controller.rotateMotorsByDeg(alpha, beta, delta);
+				controller.rotateJointsByDeg(alpha, beta, delta);
 //				System.out.println(pos[0] + " " + pos[1] + " " + pos[2]);
 			} while (alpha != 0.0f || beta != 0.0f || delta != 0.0f);
 			

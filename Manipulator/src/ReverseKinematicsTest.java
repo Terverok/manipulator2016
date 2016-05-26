@@ -110,7 +110,7 @@ public class ReverseKinematicsTest {
 		
 		Thread.sleep(100);
 		
-		controller.rotateMotorsByDeg(0.f, 0.f, 0.f);		
+		controller.rotateJointsByDeg(0.f, 0.f, 0.f);		
 		
 		Thread.sleep(100);
 		vec[0] = 33.f;

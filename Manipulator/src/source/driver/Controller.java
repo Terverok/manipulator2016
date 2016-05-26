@@ -9,6 +9,13 @@ public class Controller {
 	private final double przelozenieB = 5.0;
 	private final int startSpeed = 45, startSpeedA, startSpeedB, startSpeedC;
 	
+	double alphaMin = -175.0,
+			alphaMax = 80.0,
+			betaMin = -58.0,
+			betaMax = 60.0,
+			deltaMin = -50.0,
+			deltaMax = 245.0; //safe angles
+	
 	static {
 		instance = new Controller();
 	}
@@ -107,14 +114,7 @@ public class Controller {
 		return rev;
 	}
 	
-	public int[] rotateMotorsToDeg(double alpha, double beta, double delta) {		
-		double alphaMin = -175.0,
-		alphaMax = 80.0,
-		betaMin = -58.0,
-		betaMax = 60.0,
-		deltaMin = -50.0,
-		deltaMax = 245.0;
-		
+	public int[] rotateJointsToDeg(double alpha, double beta, double delta) {		
 		if (alpha < alphaMin) {
 			alpha = alphaMin;
 		}
@@ -141,19 +141,43 @@ public class Controller {
 		beta -= currentAngles[1];
 		delta -= currentAngles[2];
 		
-		return rotateMotorsByDeg(alpha, beta, delta);
+		return executeMovement(alpha, beta, delta);
 	}
 	
-	public int[] rotateMotorsByDeg(double alpha, double beta, double delta) {
-		//need check for dangerous angles!!!!
-		//put here!
+	public int[] rotateJointsByDeg(double alpha, double beta, double delta) {
+		double[] currentAngles = motorDegreesToJointDegrees(getMotorPositions());
+		double a = currentAngles[0] + alpha;
+		double b = currentAngles[1] + beta;
+		double c = currentAngles[2] + delta;
+		
+		if (a < alphaMin) {
+			alpha = currentAngles[0] - alphaMin;
+		}
+		else if (a > alphaMax) {
+			alpha = currentAngles[0] - alphaMax;
+		}
+		
+		if (b < betaMin) {
+			beta = currentAngles[1] - betaMin;
+		}
+		else if (b > betaMax) {
+			beta = currentAngles[1] - betaMax;
+		}
+		
+		if (c < deltaMin) {
+			delta = currentAngles[2] - deltaMin;
+		}
+		else if (c > deltaMax) {
+			delta = currentAngles[2] - deltaMax;
+		}
+		
+		return executeMovement(alpha, beta, delta);
+	}
+	
+	private int[] executeMovement(double alpha, double beta, double delta){
 		int[] anglesToEngine = jointDegreesToMotorDegrees(alpha, beta, delta);
 		adjustSpeedForDistance(alpha, beta, delta);
-		connection.rotateMotorsBy(anglesToEngine[0], anglesToEngine[1], anglesToEngine[2]);
-		while (connection.isMoving()) {
-			continue; //poczekaj a� silniki si� zatrzymaj�
-		}
-		return connection.getMotorPositions();
+		return connection.rotateMotorsBy(anglesToEngine[0], anglesToEngine[1], anglesToEngine[2]);
 	}
 	
 	public double[] getArmPosition() {
@@ -163,18 +187,15 @@ public class Controller {
 	}
 	
 	public double[] moveArmTo(double x, double y, double z) {
-		double[] ang = getArmPosition();
-		for(int j = 0; j < 1; j++) {		
-			ang = Kinematics.calculateChangeMotorPoisitons(x, y, z, ang);
-			//Computed angles with small error send to device
-		}
-		rotateMotorsToDeg(ang[0], ang[1], ang[2]);
+		double[] ang = motorDegreesToJointDegrees(getMotorPositions());
+		ang = Kinematics.calculateChangeMotorPoisitons(x, y, z, ang);
+		rotateJointsToDeg(ang[0], ang[1], ang[2]);
 		return getArmPosition();
 	}
 	
 	public double[] moveArmBy(double x, double y, double z) {
-		// TODO
-		return null;
+		double[] pos = getArmPosition();
+		return moveArmTo(pos[0] + x, pos[1] + y, pos[2] + z);
 	}
 
 	public void reset() {
