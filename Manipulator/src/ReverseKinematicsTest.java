@@ -11,6 +11,7 @@ import org.apache.commons.math3.linear.RealVector;
 import lejos.nxt.Button;
 import lejos.nxt.Motor;
 import source.*;
+import source.driver.Controller;
 
 class MyWindow extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -101,10 +102,10 @@ public class ReverseKinematicsTest {
 				{0.d, 0.d, -1.d, 0.d}
 		};
 		RealMatrix MatrixPers = MatrixUtils.createRealMatrix(PerspectiveMatdata);*/
-		Controller controller = new Controller();
+		Controller controller = Controller.getInstance();
 		try{
 		
-		double[] pos = Controller.reverseCorrectDegrees(controller.getMotorPositions());
+//		double[] pos = Controller.reverseCorrectDegrees(controller.getMotorPositions());
 		double[] vec = controller.getArmPosition();
 		
 		Thread.sleep(100);

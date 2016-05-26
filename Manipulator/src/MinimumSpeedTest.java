@@ -1,10 +1,10 @@
 import java.util.Scanner;
 
-import source.Controller;
+import source.driver.Controller;
 
 public class MinimumSpeedTest {
 	public static void main(String[] args) {
-		Controller controller = new Controller();
+		Controller controller = Controller.getInstance();
 		try (Scanner scanner = new Scanner(System.in)){
 			controller.reset();			
 			int speed;

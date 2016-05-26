@@ -1,4 +1,4 @@
-package source;
+package source.driver;
 
 import lejos.nxt.Motor;
 
@@ -49,7 +49,7 @@ public class PcConnection implements Connection{
 			catch(Exception e) {
 				e.printStackTrace();
 			}
-		} //poczekaj a� silniki si� zatrzymaj�
+		}
 		return getMotorPositions();
 	}
 	
@@ -59,7 +59,12 @@ public class PcConnection implements Connection{
 		Motor.B.rotate(beta, true);
 		Motor.C.rotate(delta, true);
 		while (isMoving()) {
-			continue; //poczekaj a� silniki si� zatrzymaj�
+			try {
+				Thread.sleep(20);
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return getMotorPositions();
 	}

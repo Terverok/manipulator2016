@@ -1,4 +1,4 @@
-package source;
+package source.driver;
 
 import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealMatrix;
@@ -6,11 +6,7 @@ import org.apache.commons.math3.linear.RealVector;
 //Marek Tkaczyk
 public class Kinematics {
 	private static double TachometrPerRadian = Math.PI / 180.0;
-	private Controller controller;
 	
-	public Kinematics(Controller controller){
-		this.controller = controller;
-	}
 	
 	
 	public static RealMatrix RotateX(double alpha) {
@@ -87,7 +83,7 @@ public class Kinematics {
 		return t.operate(MatrixUtils.createRealVector(vec)).toArray();
 	}
 	
-	public static RealMatrix calculateTransJacobian() {
+	private static RealMatrix calculateTransJacobian() {
 		double[] pos = calculateArmPosition(0.0, 0.0, 0.0);
 		RealVector vec0 = MatrixUtils.createRealVector(pos); 
 		
@@ -111,7 +107,7 @@ public class Kinematics {
 		return MatrixUtils.createRealMatrix(jacobian);
 	}
 
-	public double[] calculateChangeMotorPoisitons(double x, double y, double z, double[] angles) {
+	public static double[] calculateChangeMotorPoisitons(double x, double y, double z, double[] angles) {
 		//we need something better
 		double[] positionNow = calculateArmPosition(angles[0], angles[1], angles[2]);
 		double[] positionTo = {x, y, z, 1.0};
