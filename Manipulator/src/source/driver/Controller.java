@@ -11,10 +11,10 @@ public class Controller {
 	
 	double alphaMin = -175.0,
 			alphaMax = 80.0,
-			betaMin = -58.0,
-			betaMax = 60.0,
-			deltaMin = -50.0,
-			deltaMax = 245.0; //safe angles
+			betaMin = -89.0,//ch
+			betaMax = 30.0,//changed
+			deltaMin = 0,
+			deltaMax = 255; //safe angles
 	
 	static {
 		instance = new Controller();
@@ -154,7 +154,7 @@ public class Controller {
 		double b = currentAngles[1] + beta;
 		double c = currentAngles[2] + delta;
 		
-		if (a < alphaMin) {
+		/*if (a < alphaMin) {
 			alpha = currentAngles[0] - alphaMin;
 		}
 		else if (a > alphaMax) {
@@ -174,7 +174,7 @@ public class Controller {
 		else if (c > deltaMax) {
 			delta = currentAngles[2] - deltaMax;
 		}
-		
+		*/
 		return executeMovement(alpha, beta, delta);
 	}
 	
