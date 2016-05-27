@@ -49,8 +49,8 @@ class MyWindow extends JFrame implements KeyListener{
 	}
 	
 	void AutoCalibration() throws InterruptedException{
-		float xoff = 10;//-113;
-		float yoff = -200;//-154;
+		float xoff = -113;//10
+		float yoff = -154;//-200
 		
 		float error = Math.abs(tilt.getYAccel() + yoff + tilt.getXAccel() + xoff);
 		System.out.println("Calibration process! input error:"+error);
@@ -66,7 +66,7 @@ class MyWindow extends JFrame implements KeyListener{
 			
 		}
 		
-		con.rotateJointsByDeg(0.f, 55.f, 0.f);
+		//con.rotateJointsByDeg(0.f, 55.f, 0.f);
 	}
 	
 	public void mainloop() {
