@@ -59,7 +59,7 @@ public class Controller {
 				startSpeedC*delta);
 	}
 	
-	public void Calibrate() {
+	public void calibrate() {
 		float xoff = -113;//10
 		float yoff = -154;//-200
 		
