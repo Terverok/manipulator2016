@@ -4,7 +4,6 @@ import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
 
-import source.Kinematics;
 //Marek Tkaczyk
 public class Kinematics {
 	private static double TachometrPerRadian = Math.PI / 180.0;
@@ -133,18 +132,18 @@ public class Kinematics {
 			//if (change.getNorm() > 0.3f) normal = false;
 			dtheta = change.toArray();
 	
-			ang[0] += dtheta[0];
-			ang[1] += dtheta[1];
-			ang[2] += dtheta[2];
+			angles[0] += dtheta[0];
+			angles[1] += dtheta[1];
+			angles[2] += dtheta[2];
 			
 			/*System.out.println(positionNow[0] + " " + positionNow[1] + " " + positionNow[2]);
 			System.out.println("Length: " + Math.sqrt(positionNow[0]*positionNow[0] + positionNow[1]*positionNow[1] + positionNow[2]*positionNow[2]));
 			System.out.println("Theta: " + dtheta[0] + " " +dtheta[1] + " " + dtheta[2]);*/
 			
-			positionNow = Kinematics.calculateArmPosition(ang[0], ang[1], ang[2]);
+			positionNow = Kinematics.calculateArmPosition(angles[0], angles[1], angles[2]);
 		}
 		if (!normal) {
-			ang = startAngles;
+			angles = startAngles;
 			System.out.println("[ERROR]Obliczenie niestabilne numerycznie, Powrot do podstawowych danych ");
 			System.out.println("[ERROR]Wykonanych iteracji"+iter);
 		}
