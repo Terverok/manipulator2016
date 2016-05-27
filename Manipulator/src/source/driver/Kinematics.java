@@ -3,6 +3,8 @@ package source.driver;
 import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
+
+import source.Kinematics;
 //Marek Tkaczyk
 public class Kinematics {
 	private static double TachometrPerRadian = Math.PI / 180.0;
@@ -49,20 +51,6 @@ public class Kinematics {
 		return MatrixUtils.createRealMatrix(Trans);
 	}
 	
-	public static double ComputeThetaC(double alpha) {
-		//For start it's hardcoded - needs refactoring
-		double r1 = Math.sqrt(6.5d*6.5d + 27.5d*27.5d)/100.d;
-		double r2 = Math.sqrt(8*8+1)/100.d;
-		double r3 = 0.265d;
-		double r4 = 0.135d;
-		
-		double theta1 = -Math.atan(6.5d/27.5d);
-		double y3 = r1 * Math.sin(theta1) - r2 * Math.sin(alpha);
-		double x3 = r1 * Math.cos(theta1) - r2 * Math.cos(alpha);
-		
-		return  (Math.atan2(y3, x3) + Math.acos((x3*x3 + y3*y3 +  r4*r4 - r3*r3) / (2 * -r4 * Math.sqrt(x3*x3 + y3*y3))));
-	}
-
 	public static double[] calculateArmPosition(double alfa, double beta, double delta) {
 		double theta[] = new double[3];
 		theta[0] = Math.toRadians(alfa);
@@ -116,27 +104,52 @@ public class Kinematics {
 		//compute inverse jacobian, so we could compute angle changes
 		final RealMatrix InvJac = calculateTransJacobian();
 				
+		double[] startAngles = new double[3];
+		
+		for(int i = 0; i < 3; i++) startAngles[i] = angles[i];
+			
 		double[] dtheta = new double[3];
 		
-		for(int i = 0; i < 400; i++) {
-			RealVector Now = MatrixUtils.createRealVector(positionNow);
+		RealVector Now = To;
+		int iter = 0;
+		boolean normal = true;
+		float oldnorm = 0.0f;
+		
+		while(Now.getNorm() > 1.f && iter < 1000 && normal) {
+			iter++;
+			oldnorm = (float) Now.getNorm();
+			
+			Now = MatrixUtils.createRealVector(positionNow);
 					
 			Now = To.subtract(Now);
-		
+			if (Now.getNorm() > oldnorm) {
+				System.out.println("[ERROR]Niestabilność norm, diffrence:" + (Now.getNorm() - oldnorm));
+				normal = false;
+			}
 			//small change of angles on manipulator
-			dtheta = InvJac.operate(Now).mapMultiply(0.1d).toArray();
-			
-			angles[0] += dtheta[0];
-			angles[1] += dtheta[1];
-			angles[2] += dtheta[2];
+			RealVector change = InvJac.operate(Now).mapMultiply(0.1);
+//			System.out.println(""+change.getNorm());
+//			if (change.getNorm() > 0.1f) System.out.println("przedział niestabilności!");
+			//if (change.getNorm() > 0.3f) normal = false;
+			dtheta = change.toArray();
+	
+			ang[0] += dtheta[0];
+			ang[1] += dtheta[1];
+			ang[2] += dtheta[2];
 			
 			/*System.out.println(positionNow[0] + " " + positionNow[1] + " " + positionNow[2]);
 			System.out.println("Length: " + Math.sqrt(positionNow[0]*positionNow[0] + positionNow[1]*positionNow[1] + positionNow[2]*positionNow[2]));
 			System.out.println("Theta: " + dtheta[0] + " " +dtheta[1] + " " + dtheta[2]);*/
 			
-			positionNow = Kinematics.calculateArmPosition(angles[0], angles[1], angles[2]);
+			positionNow = Kinematics.calculateArmPosition(ang[0], ang[1], ang[2]);
 		}
-			
+		if (!normal) {
+			ang = startAngles;
+			System.out.println("[ERROR]Obliczenie niestabilne numerycznie, Powrot do podstawowych danych ");
+			System.out.println("[ERROR]Wykonanych iteracji"+iter);
+		}
+		else System.out.println("Znaleziono rozwiązanie w Iteracji:" + iter);
+		
 		return angles;
 	}
 
