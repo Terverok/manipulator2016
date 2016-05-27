@@ -16,6 +16,8 @@ import lejos.nxt.Motor;
 import lejos.nxt.SensorPort;
 import lejos.nxt.addon.AccelHTSensor;
 import source.*;
+import source.driver.Controller;
+import source.driver.Kinematics;
 
 class MyWindow extends JFrame implements KeyListener{
 	private static final long serialVersionUID = 1L;
@@ -40,10 +42,10 @@ class MyWindow extends JFrame implements KeyListener{
 		dt = 0.1f;
 		lasttime = System.nanoTime();
 		
-		con = new Controller();
+		con = Controller.getInstance();
 		points = p;
 		end = false;
-		pos = con.reverseCorrectDegrees(con.getMotorPositions());
+		pos = con.getJointAngles();
 	}
 	
 	void AutoCalibration() throws InterruptedException{
@@ -54,8 +56,8 @@ class MyWindow extends JFrame implements KeyListener{
 		System.out.println("Calibration process! input error:"+error);
 		while(error > 2 && !end) {
 			
-			if (tilt.getXAccel() > -xoff) con.rotateMotorsByDeg(0, -1.f-0.2*error, 0);
-			else con.rotateMotorsByDeg(0, 1.f+0.2*error, 0);
+			if (tilt.getXAccel() > -xoff) con.rotateJointsByDeg(0, -1.f-0.2*error, 0);
+			else con.rotateJointsByDeg(0, 1.f+0.2*error, 0);
 			
 			error = Math.abs(tilt.getYAccel() + yoff + tilt.getXAccel() + xoff);
 			
@@ -64,7 +66,7 @@ class MyWindow extends JFrame implements KeyListener{
 			
 		}
 		
-		con.rotateMotorsByDeg(0.f, 55.f, 0.f);
+		con.rotateJointsByDeg(0.f, 55.f, 0.f);
 	}
 	
 	public void mainloop() {
@@ -74,14 +76,12 @@ class MyWindow extends JFrame implements KeyListener{
 		
 		AutoCalibration();
 			
-		pos = con.reverseCorrectDegrees(con.getMotorPositions());
+		pos = con.getJointAngles();
 		double[] start = con.getArmPosition();
 		double[] mov = {0, 0, 0};
 		double[] vec = {0 , 0, 0} ;
 		
-		Thread.sleep(100);
-		
-		con.rotateMotorsByDeg(0.f, 0.f, 0.f);		
+		Thread.sleep(100);		
 		
 		Thread.sleep(100);
 		
@@ -94,7 +94,7 @@ class MyWindow extends JFrame implements KeyListener{
 			mov[0] = angles[0];
 			mov[1] = angles[1];
 			mov[2] = angles[2];
-			pos = con.reverseCorrectDegrees(con.getMotorPositions());
+			pos = con.getJointAngles();
 			
 //			System.out.println("\n" + pos[0] + " " + pos[1] + " " + pos[2]);
 			

@@ -87,6 +87,10 @@ public class Controller {
 		return new int[]{a, b, c};
 	}
 	
+	public double[] getJointAngles(){
+		return motorDegreesToJointDegrees(getMotorPositions());
+	}
+	
 	private int[] jointDegreesToMotorDegrees(double[] angles) {
 		int[] correct = {
 				(int) Math.round(angles[0] * przelozenieA),
