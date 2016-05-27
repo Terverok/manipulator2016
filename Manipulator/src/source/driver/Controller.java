@@ -1,13 +1,15 @@
 package source.driver;
 
+import lejos.nxt.addon.AccelHTSensor;
+
 public class Controller {
 	
 	private static Controller instance;
 	private Connection connection;
-	
+		
 	private final double przelozenieA = 11.2;
 	private final double przelozenieB = 5.0;
-	private final int startSpeed = 45, startSpeedA, startSpeedB, startSpeedC;
+	private final int startSpeed = 27, startSpeedA, startSpeedB, startSpeedC;
 	
 	double alphaMin = -175.0,
 			alphaMax = 80.0,
@@ -55,6 +57,34 @@ public class Controller {
 		setSpeed(startSpeedA*alpha,
 				startSpeedB*beta,
 				startSpeedC*delta);
+	}
+	
+	public void Calibrate() {
+		float xoff = -113;//10
+		float yoff = -154;//-200
+		
+		int[] tilt = connection.getTilt();
+		float error = Math.abs(tilt[1] + yoff + tilt[0] + xoff);
+		System.out.println("Calibration process! input error:"+error);
+		while(error > 3) {
+			
+			if (tilt[0] > -xoff) rotateJointsByDeg(0, -1.f-0.2*error, 0);
+			else rotateJointsByDeg(0, 1.f+0.2*error, 0);
+			
+			tilt = connection.getTilt();
+			
+			error = Math.abs(tilt[1] + yoff + tilt[0] + xoff);
+			
+			System.out.println(""+error);
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}			
+		}
+		
+		//con.rotateJointsByDeg(0.f, 55.f, 0.f);
 	}
 	
 	public void setSpeed(int a, int b, int c) {
@@ -154,7 +184,7 @@ public class Controller {
 		double b = currentAngles[1] + beta;
 		double c = currentAngles[2] + delta;
 		
-		/*if (a < alphaMin) {
+		if (a < alphaMin) {
 			alpha = currentAngles[0] - alphaMin;
 		}
 		else if (a > alphaMax) {
@@ -174,7 +204,7 @@ public class Controller {
 		else if (c > deltaMax) {
 			delta = currentAngles[2] - deltaMax;
 		}
-		*/
+		
 		return executeMovement(alpha, beta, delta);
 	}
 	

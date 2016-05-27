@@ -1,12 +1,16 @@
 package source.driver;
 
 import lejos.nxt.Motor;
+import lejos.nxt.SensorPort;
+import lejos.nxt.addon.AccelHTSensor;
 
 public class PcConnection implements Connection{
 	private int[] startingPosition;
+	AccelHTSensor tilt;
 	
 	public PcConnection(){
 		startingPosition = getMotorPositions();
+		tilt = new AccelHTSensor(SensorPort.S1);
 	}
 	
 	
@@ -67,6 +71,11 @@ public class PcConnection implements Connection{
 			}
 		}
 		return getMotorPositions();
+	}
+	
+	public int[] getTilt() {
+		int[] tiltData = {tilt.getXAccel(), tilt.getYAccel(), tilt.getZAccel()};
+		return tiltData;
 	}
 	
 	public int[] reset() {

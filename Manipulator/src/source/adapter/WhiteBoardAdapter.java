@@ -26,6 +26,9 @@ public class WhiteBoardAdapter implements ControlAdapter2dTo3d {
 		
 		if (currentY > Y0) currentY = Y0;
 		else if (currentY < Y_MAX) currentY = Y_MAX; 
+		
+		currentAltitude = altOn - (currentY-Y_MAX)*0.035 * 2; //countermeasure against gravitation
+		System.out.println("Altitude:" + currentAltitude);
 	}
 	
 	@Override
@@ -56,7 +59,6 @@ public class WhiteBoardAdapter implements ControlAdapter2dTo3d {
 	@Override
 	public double[] penDown() {
 		// TODO Auto-generated method stub
-		currentAltitude = altOn;
 		return execute();
 	}
 }

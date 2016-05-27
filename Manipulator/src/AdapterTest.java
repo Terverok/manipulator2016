@@ -14,7 +14,18 @@ public class AdapterTest {
 			adapter.penDown();
 			adapter.penUp();
 			adapter.penDown();
+			adapter.moveTo(0, 0);
 			double x, y;
+			x = 0;
+			y = 0;
+			//draws triangle
+			for(int i = 0; i < 3; i++) {
+				adapter.moveTo(0, 10);
+				adapter.moveTo(10, 10);
+				adapter.moveTo(10, 20);
+				adapter.moveTo(10, 30);
+				adapter.moveTo(0, 10);
+			}
 			do{
 				x = scanner.nextDouble();
 				y = scanner.nextDouble();
