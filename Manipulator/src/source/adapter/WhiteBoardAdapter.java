@@ -17,6 +17,7 @@ public class WhiteBoardAdapter implements ControlAdapter2dTo3d {
 	}
 	
 	private double[] execute(){
+		if (currentAltitude != altOff) antiGravity();
 		return controller.moveArmTo(currentX, currentAltitude, currentY);
 	}
 	
@@ -26,14 +27,15 @@ public class WhiteBoardAdapter implements ControlAdapter2dTo3d {
 		
 		if (currentY > Y0) currentY = Y0;
 		else if (currentY < Y_MAX) currentY = Y_MAX; 
-		
-		currentAltitude = altOn - (currentY-Y_MAX)*0.035 * 2; //countermeasure against gravitation
+	}
+	
+	private void antiGravity(){  //countermeasure against gravitation
+		currentAltitude = altOn - (currentY-Y_MAX)*0.035 * 2;
 		System.out.println("Altitude:" + currentAltitude);
 	}
 	
 	@Override
 	public double[] moveTo(double x, double y) {
-		// TODO Auto-generated method stub
 		currentX = X0 - x;
 		currentY = Y0 - y;
 		check();
@@ -42,7 +44,6 @@ public class WhiteBoardAdapter implements ControlAdapter2dTo3d {
 	
 	@Override
 	public double[] moveBy(double x, double y) {
-		// TODO Auto-generated method stub
 		currentX -= x;
 		currentY -= y;
 		check();
@@ -51,14 +52,13 @@ public class WhiteBoardAdapter implements ControlAdapter2dTo3d {
 
 	@Override
 	public double[] penUp() {
-		// TODO Auto-generated method stub
 		currentAltitude = altOff;
 		return execute();
 	}
 
 	@Override
 	public double[] penDown() {
-		// TODO Auto-generated method stub
+		currentAltitude = altOn;
 		return execute();
 	}
 }
