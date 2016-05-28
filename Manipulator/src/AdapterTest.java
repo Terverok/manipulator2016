@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-import source.adapter.ControlAdapter2dTo3d;
+import source.adapter.Adapter2dTo3d;
 import source.adapter.WhiteBoardAdapter;
 import source.driver.Controller;
 
@@ -9,7 +9,7 @@ public class AdapterTest {
 		Controller.getInstance().reset();
 		try{
 			Scanner scanner = new Scanner(System.in);
-			ControlAdapter2dTo3d adapter = new WhiteBoardAdapter(Controller.getInstance());
+			Adapter2dTo3d adapter = new WhiteBoardAdapter(Controller.getInstance());
 			adapter.moveTo(0, 0);
 			adapter.penDown();
 			adapter.penUp();

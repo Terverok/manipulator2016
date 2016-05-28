@@ -2,7 +2,7 @@ package source.adapter;
 
 import source.driver.Controller;
 
-public class WhiteBoardAdapter implements ControlAdapter2dTo3d {
+public class WhiteBoardAdapter implements Adapter2dTo3d {
 	private Controller controller;
 	private double currentAltitude;
 	private final double X0=34, Y0=62, X_MAX=12, Y_MAX=30;
