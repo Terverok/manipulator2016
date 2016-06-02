@@ -64,6 +64,8 @@ public class DrawLetters extends JFrame {
 
         add(panel);
 
+        panel.setShowSteps(true);
+
         revalidate();
         repaint();
     }

@@ -8,6 +8,7 @@ public class Main {
     public static void main(String[] args) {
         DrawLetters drawLetters = new DrawLetters();
 
+
         drawLetters.addLetter(ConcreteShapes.getAlphabet());
     }
 }
