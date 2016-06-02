@@ -1,7 +1,7 @@
-package done.app;
+package main.done.app;
 
-import done.letters.Letter;
-import done.letters.ManipulatorShape;
+import main.done.letters.Letter;
+import main.done.letters.ManipulatorShape;
 
 import javax.swing.*;
 import java.awt.*;

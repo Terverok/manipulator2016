@@ -1,4 +1,4 @@
-package done.letters;
+package main.done.letters;
 
 import java.awt.*;
 

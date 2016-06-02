@@ -1,4 +1,4 @@
-package done.letters;
+package main.done.letters;
 
 
 import java.awt.*;
@@ -59,7 +59,7 @@ public class Letter implements ManipulatorShape {
     }
 
     public Shape getStep(int step) {
-        return null;
+        return shapes[step];
     }
 
     public int getShapeCount() {
@@ -88,5 +88,9 @@ public class Letter implements ManipulatorShape {
         }
 
         return max;
+    }
+
+    public Point getPoint(int index) {
+        return pointList.get(index);
     }
 }

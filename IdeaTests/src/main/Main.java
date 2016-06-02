@@ -1,5 +1,7 @@
-import done.letters.ConcreteShapes;
-import done.app.DrawLetters;
+package main;
+
+import main.done.letters.ConcreteShapes;
+import main.done.app.DrawLetters;
 
 /**
  * Created by pawel on 18.04.2016.
