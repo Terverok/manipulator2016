@@ -88,7 +88,11 @@ class MyWindow extends JFrame implements KeyListener{
 //		while(!end) {
 //			con.rotateMotorsToDeg(angles[0], angles[1], angles[2]);
 //		}
-		System.out.println("exit");
+		//con.moveArmTo(12, 0, 30);
+		/*start[0] = 12;
+		start[1] = -6;
+		start[2] = 30;*/
+		
 		while(!end) {
 			con.moveArmTo(start[0]+mov[0], (float)start[1]+mov[1], start[2]+mov[2]);
 			mov[0] = angles[0];
@@ -98,8 +102,8 @@ class MyWindow extends JFrame implements KeyListener{
 			
 //			System.out.println("\n" + pos[0] + " " + pos[1] + " " + pos[2]);
 			
-//			vec = con.getArmPosition();
-//			System.out.println("3D pos:" + vec[0] + " " + vec[1] + " " + vec[2]);
+			vec = con.getArmPosition();
+			System.out.println("3D pos:" + vec[0] + " " + vec[1] + " " + vec[2]);
 			
 //			System.out.println("tilt x:" + tilt.getXAccel() + " y:" + tilt.getYAccel() + " z:" + tilt.getZAccel());
 //			System.out.println("Length: " + Math.sqrt(vec[0]*vec[0] + vec[1]*vec[1] + vec[2]*vec[2]));
@@ -112,7 +116,7 @@ class MyWindow extends JFrame implements KeyListener{
 		{
 			con.reset();
 		}
-		
+		System.out.println("exit");
 		
 		con.reset();
 	}
@@ -167,7 +171,7 @@ class MyWindow extends JFrame implements KeyListener{
 	@Override
 	public void keyPressed(KeyEvent e) {
 		dt = (System.nanoTime() - this.lasttime )/1000000000.0f;
-		float speed = 4.0f;
+		float speed = 1.0f;
 		if (dt > .5f) dt = 1 / speed;
 	
 		if (e.getKeyChar() == 'p') {
