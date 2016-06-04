@@ -113,6 +113,7 @@ public class Kinematics {
 		int iter = 0;
 		boolean normal = true;
 		float oldnorm = 0.0f;
+		float alpha = 0.1f;
 		
 		while(Now.getNorm() > 1.f && iter < 1000 && normal) {
 			iter++;
@@ -125,8 +126,10 @@ public class Kinematics {
 				System.out.println("[ERROR]Niestabilność norm, diffrence:" + (Now.getNorm() - oldnorm));
 				normal = false;
 			}
+			
+			alpha = 1/oldnorm;
 			//small change of angles on manipulator
-			RealVector change = InvJac.operate(Now).mapMultiply(0.1);
+			RealVector change = InvJac.operate(Now).mapMultiply(alpha);
 //			System.out.println(""+change.getNorm());
 //			if (change.getNorm() > 0.1f) System.out.println("przedział niestabilności!");
 			//if (change.getNorm() > 0.3f) normal = false;
@@ -147,7 +150,7 @@ public class Kinematics {
 			System.out.println("[ERROR]Obliczenie niestabilne numerycznie, Powrot do podstawowych danych ");
 			System.out.println("[ERROR]Wykonanych iteracji"+iter);
 		}
-		else System.out.println("Znaleziono rozwiązanie w Iteracji:" + iter);
+		//else System.out.println("Znaleziono rozwiązanie w Iteracji:" + iter);
 		
 		return angles;
 	}
