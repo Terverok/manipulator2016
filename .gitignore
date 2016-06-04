@@ -1,5 +1,6 @@
+.classpath
+.project
 Manipulator/bin/*
 Manipulator/.settings/*
 Manipulator/.classpath
 Manipulator/bin/.classpath
-Manipulator/.classpath
